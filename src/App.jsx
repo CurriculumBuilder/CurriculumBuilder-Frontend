@@ -4,13 +4,14 @@ import LoginPage from "./pages/LoginPage";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 import CurriculumPage from './pages/CurriculumPage';
-import HomePage from './pages/Homepage';
+import HomePage from './pages/HomePage';
 import { Routes, Route } from 'react-router-dom';
+
 
 function App() {
   return (
     <div className="App">
-    
+
       <Routes>      
         <Route path="/" element={<HomePage />} />
         <Route
