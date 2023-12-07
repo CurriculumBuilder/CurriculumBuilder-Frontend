@@ -1,0 +1,6 @@
+
+    .main-container{
+        @apply w-auto h-full min-h-screen bg-blue-500 
+    }
+    
+
