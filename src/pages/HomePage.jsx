@@ -8,7 +8,7 @@ function HomePage() {
     return (
       <div>
         <h1>Home Page</h1>
-        {isLoggedIn && <p>I'm in</p>}
+        {isLoggedIn && <button className="btnHome">Create CV</button>}
       </div>
     );
   }
