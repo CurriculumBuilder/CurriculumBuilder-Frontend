@@ -1,6 +1,20 @@
 
     .main-container{
-        @apply w-auto h-full min-h-screen bg-blue-500 
+        @apply w-auto flex flex-row
     }
-    
-
+    .preview-container{
+        @apply w-1/2 h-screen bg-slate-400 flex flex-col
+    }
+    .form-container{
+        @apply w-1/2 p-8
+    }
+    .preview-menu{
+        @apply flex flex-row-reverse p-4
+    }
+    .preview-pdf{
+        align-self: center;
+        height: 50rem;
+        width: 40rem;
+        padding: 0;
+        @apply bg-white mr-10 ml-10 rounded
+    }
