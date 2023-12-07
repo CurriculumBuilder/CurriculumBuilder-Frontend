@@ -18,7 +18,9 @@
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-router-dom": "^6.20.1",
-    "react-to-print": "^2.14.15"
+    "react-to-print": "^2.14.15",
+
+    "react-router-hash-link": "^2.4.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",

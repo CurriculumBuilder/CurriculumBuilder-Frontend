@@ -1,0 +1,7 @@
+.titles-home {
+    @apply font-bold text-slate-800 text-4xl 
+}
+
+.main-section-home {
+    @apply columns-2 
+}

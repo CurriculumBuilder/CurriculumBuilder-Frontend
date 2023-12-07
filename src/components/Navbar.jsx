@@ -1,14 +1,15 @@
 import { Link } from "react-router-dom"
+import { HashLink } from "react-router-hash-link"
 
 function Navbar (){
     return (
     <nav className="navbar">
-        <Link to={"/"}><h1>Logo</h1></Link>
-        <Link ><h1>About Us</h1></Link>
-        <Link ><h1>Contact</h1></Link>
-        <Link ><h1>FAQ</h1></Link>
-        <Link to={"/login"}><h1>Login</h1></Link>
-        <Link to={"/signup"}><h1>SignUp</h1></Link>
+        <Link to={"/"}>Logo</Link>
+        <HashLink to={"/#about-us"}>About Us</HashLink>
+        <HashLink to={"/#contact"}>Contact</HashLink>
+        <HashLink to={"/#faq"}>FAQ</HashLink>
+        <Link to={"/login"}>Login</Link>
+        <Link to={"/signup"}>SignUp</Link>
     </nav>
     )
 }
