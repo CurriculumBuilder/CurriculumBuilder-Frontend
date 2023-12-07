@@ -7,7 +7,6 @@ import CurriculumPage from './pages/CurriculumPage';
 import HomePage from './pages/Homepage';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 
 
 function App() {
@@ -20,7 +19,6 @@ function App() {
         <Route path="/login" element={<IsAnon> <LoginPage /> </IsAnon>} />
         <Route path="/signup" element={<IsAnon> <SignUpPage /> </IsAnon>} />
       </Routes>
-      <Footer />
     </div>
   );
 }

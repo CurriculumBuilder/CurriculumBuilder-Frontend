@@ -10,17 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^3.1.14",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.2",
     "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
+    "html-to-draftjs": "^1.5.0",
     "postcss": "^8.4.32",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
+    "react-pdf-tailwind": "^2.1.0",
     "react-router-dom": "^6.20.1",
-    "react-to-print": "^2.14.15",
-
-    "react-router-hash-link": "^2.4.3"
+    "react-router-hash-link": "^2.4.3",
+    "react-to-print": "^2.14.15"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
