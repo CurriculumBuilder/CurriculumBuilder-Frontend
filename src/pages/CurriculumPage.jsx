@@ -1,32 +1,14 @@
-import { useContext, useState } from "react";
+import { useContext, useState,useRef } from "react";
 import { AuthContext } from "../context/auth.context";
+import { useReactToPrint } from 'react-to-print';
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../styles/Curriculum.css";
-import {
-  Page,
-  Text,
-  View,
-  Document,
-  PDFViewer,
-  PDFDownloadLink,
-} from "@react-pdf/renderer";
-import { createTw } from "react-pdf-tailwind";
+import DOMPurify from "dompurify";
 
-const tw = createTw({
-  theme: {
-    fontFamily: {
-      sans: ["Comic Sans"],
-    },
-    extend: {
-      colors: {
-        custom: "#bada55",
-      },
-    },
-  },
-});
+
 
 function CurriculumPage() {
   const { user } = useContext(AuthContext);
@@ -36,15 +18,23 @@ function CurriculumPage() {
   const [address, setAddress] = useState("");
   let editorState = EditorState.createEmpty();
   const [summry, setSummry] = useState(editorState);
+  const [htmlContentSummry, setHtmlContentSummry] = useState("");
+
+  const componentRef = useRef();
+
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
 
   const onEditorStateChange = (editorState) => {
 
     const contentState = editorState.getCurrentContent();
     const rawContent = convertToRaw(contentState);
     const markup = draftToHtml(rawContent);
-
+    setHtmlContentSummry(markup);
     console.log("..........");
-    console.log(markup);
+    console.log(htmlContentSummry);
     console.log("..........");
   
     setSummry(editorState);
@@ -166,23 +156,17 @@ function CurriculumPage() {
       </div>
 
       <div className="preview-container">
-        <div className="preview-menu">
-          <PDFDownloadLink className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded pl-8 ">
+        <div className="preview-menu" >
+          <button onClick={handlePrint} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded pl-8 ">
             Download CV
-          </PDFDownloadLink>
+          </button>
         </div>
-        <PDFViewer className="preview-pdf">
-          <Document>
-            <Page size="A4">
-              <View>
-                <Text style={tw("bg-cyan-950 text-white")}> {name}</Text>
-                <Text> {email}</Text>
-                <Text> {phone}</Text>
-                <Text> {address}</Text>
-              </View>
-            </Page>
-          </Document>
-        </PDFViewer>
+        <div className="preview-pdf" ref={componentRef}>
+        {htmlContentSummry}
+        <div dangerouslySetInnerHTML={{ __html: htmlContentSummry }}/>
+
+        </div>
+        
       </div>
     </div>
   );

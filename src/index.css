@@ -1,9 +1,17 @@
-* {
-    margin: 0;
-    padding: 0;
-   }
+
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+ol > li {
+    @apply list-decimal list-inside
+ 
+    }
+    
+    ul > li {
+    @apply list-disc list-inside
+    
+    }
+
+    
