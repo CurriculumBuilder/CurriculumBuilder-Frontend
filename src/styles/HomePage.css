@@ -1,7 +1,26 @@
+.content-home {
+    padding-bottom: 70px; 
+    padding-left: 20px;
+}
+
 .titles-home {
-    @apply font-bold text-slate-800 text-4xl 
+    @apply font-bold text-slate-800 text-4xl p-5
+    
 }
 
 .main-section-home {
-    @apply columns-2 
+    @apply columns-2 justify-center flex items-center
+}
+
+.text-main-section {
+    @apply align-middle
+}
+
+.p-main-section {
+    @apply p-5 align-text-bottom
+}
+
+.btnHome {
+    margin-left: 20px;
+    @apply inline-flex items-center justify-center rounded-md p-2.5 text-white bg-blue-500 hover:bg-blue-800
 }

@@ -1,28 +1,45 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 import { HashLink } from "react-router-hash-link";
-import "../styles/HomePage.css"
+import "../styles/HomePage.css";
+import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const { isLoggedIn } = useContext(AuthContext);
 
   return (
     <>
+    <div className="content-home">
       <section className="main-section-home">
-        <div>
+        <div className="text-main-section">
           <h1 className="titles-home">
             Studies show that recruiters spend an average of 6 seconds reviewing
             a resume
           </h1>
-          <p>
+          <p className="p-main-section">
             Make those seconds count! Create a compelling CV to ensure that your
             skills and achievements grab immediate attention. Your future career
             success starts with those crucial 6 seconds – maximize your impact
             with a standout resume.
           </p>
-          {isLoggedIn && <button className="btnHome">Create CV</button>}
-          <img src="http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg" alt="cv-image" />
+
+          {isLoggedIn && (
+            <Link to={"/curriculum"}>
+              <button className="btnHome">Create CV </button>
+            </Link>
+          )}
+
+        {!isLoggedIn && (
+            <Link to={"/signup"}>
+              <button className="btnHome">Create Account </button>
+            </Link>
+          )}
         </div>
+        <img
+            src="http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg"
+            alt="cv-image"
+          />
       </section>
 
       <br />
@@ -58,8 +75,6 @@ function HomePage() {
               venenatis ex enim at est. Vivamus fringilla, nunc non rutrum
               viverra, risus nisl pellentesque risus, in blandit nulla urna
               vitae ligula.
-              
-              
             </p>
           </div>
         </section>
@@ -83,7 +98,9 @@ function HomePage() {
           </div>
         </section>
       </HashLink>
-    </>
+      </div>
+      <Footer />
+      </>
   );
 }
 

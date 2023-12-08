@@ -1,0 +1,40 @@
+
+.navbar {
+    @apply px-2 sm:px-6 lg:px-8 relative flex h-16 items-center justify-between bg-slate-800 text-white
+}
+
+.profile-icon {
+    width: 2.5rem;
+}
+
+.profile-icon-container {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    @apply bg-slate-800 
+  }
+  
+  .dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dropdown-menu li {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .dropdown-menu li:hover {
+    @apply hover:bg-slate-200 text-slate-800 rounded-md
+  }
+  

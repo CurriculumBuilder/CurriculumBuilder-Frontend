@@ -6,8 +6,7 @@ function Footer (){
     <footer className="footer">
         <Link to={"/"}>Logo</Link>
         <p>Copyright 2023 - Curriculum Builder</p>
-        <Link to={"/login"}>Login</Link>
-        <Link to={"/signup"}>SignUp</Link>
+        
     </footer>
     )
 }

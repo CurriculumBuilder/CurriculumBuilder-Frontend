@@ -7,16 +7,3 @@
 @tailwind components;
 @tailwind utilities;
 
-
-.navbar {
-    @apply px-2 sm:px-6 lg:px-8 relative flex h-16 items-center justify-between bg-slate-800 text-white
-}
-
-.footer {
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 10px;
-    @apply  mt-auto bg-slate-700 text-white p-4  h-auto flex justify-between 
-}
