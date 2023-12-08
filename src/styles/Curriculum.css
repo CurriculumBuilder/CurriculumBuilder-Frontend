@@ -14,13 +14,15 @@
     .preview-pdf{
      
         align-self: center;
-        height: 50rem;
+        height: 56rem;
         width: 40rem;
-        margin: 0;
-        @apply bg-white mr-10 ml-10 rounded 
+        margin: 0 auto;
+        @apply bg-white  
     }
-    @media print {
-        ul, ol {
-          list-style-position: inside;
-        }
-      }
+   
+
+      @page {
+        size: 7in 9.25in;
+        margin: 0; 
+        margin-left: 0 !important;
+    }
