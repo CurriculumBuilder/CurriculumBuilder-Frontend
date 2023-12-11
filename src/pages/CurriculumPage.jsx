@@ -657,82 +657,25 @@ function CurriculumPage() {
           </button>
         </div>
         <div className="preview-pdf relative" ref={componentRef}>
-          <br />
-          <div
-            className="absolute"
-            dangerouslySetInnerHTML={{ __html: htmlContentName }}
-          />
-           <br />
-          <div
-            className="absolute"
-            dangerouslySetInnerHTML={{ __html: htmlContentEmail }}
-          />
-           <br />
-          <div
-            className="absolute"
-            dangerouslySetInnerHTML={{ __html: htmlContentPhone }}
-          />
-           <br />
-          <div
-            className="absolute"
-            dangerouslySetInnerHTML={{ __html: htmlContentAddress }}
-          />
-           <br />
+          {name && (
+            <div className="flex justify-between items-center m-3">
+              <div>
+                <div className="bg-gray-300 font-bold text-white text-7xl rounded-full h-32 w-32 char-card">
+                  <p>{name[0].toUpperCase()}</p>
+                </div>
+              </div>
+              <div className="grid justify-items-end">
+                <h1 className="text-3xl font-extrabold">{name}</h1>
+                <p className="text-lg mt-1">Front-End Developer</p>
+              </div>
+            </div>
+          )}
+         
           <div
             className="absolute"
             dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
           />
-           <br />
-          <div className="absolute">
-            {links &&
-              links.map((link, index) => (
-                <div key={index}>
-                  <span>{link}</span>
-                </div>
-              ))}
-          </div>
-          <br />
-          <div className="absolute">
-            {skills &&
-              skills.map((skill, index) => (
-                <div key={index}>
-                  <span>{skill}</span>
-                </div>
-              ))}
-          </div>
-          <br />
-          <div className="absolute">
-            {languages &&
-              languages.map((language, index) => (
-                <div key={index}>
-                  <span>{language}</span>
-                </div>
-              ))}
-          </div>
-          <br />
-          <div
-            className="absolute"
-            dangerouslySetInnerHTML={{ __html: htmlContentProjects }}
-          />
-          <br />
-          <div
-            className="absolute"
-            dangerouslySetInnerHTML={{ __html: htmlContentExperience }}
-          />
-           <br />
-          <div
-            className="absolute"
-            dangerouslySetInnerHTML={{ __html: htmlContentEducation }}
-          />
-           <br />
-          <div className="absolute">
-            {awards &&
-              awards.map((award, index) => (
-                <div key={index}>
-                  <span>{award}</span>
-                </div>
-              ))}
-          </div>
+          
         </div>
       </div>
     </div>
