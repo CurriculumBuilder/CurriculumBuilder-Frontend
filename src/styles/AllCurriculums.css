@@ -1,0 +1,20 @@
+
+.modal-delete-container {
+    @apply z-10 inset-0 bg-gray-500 bg-opacity-75 transition-opacity w-screen overflow-y-auto flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0;
+}
+
+.modal-delete-card {
+    @apply flex flex-col relative overflow-hidden rounded-lg bg-white text-center shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg items-center;
+}
+
+.modal-delete-text {
+    @apply  p-5 text-center sm:ml-4 sm:mt-0 sm:text-left text-base font-semibold leading-6 text-gray-900;
+}
+
+.modal-delete-yes-btn {
+    @apply m-1 sm:flex sm:flex-row-reverse sm:px-6 inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto;
+}
+
+.modal-delete-no-btn {
+    @apply m-4 sm:flex sm:flex-row-reverse sm:px-6 mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto;
+}

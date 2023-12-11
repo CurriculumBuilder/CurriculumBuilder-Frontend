@@ -2,12 +2,18 @@ import React from 'react'
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import Modal from 'react-modal';
+import "../styles/AllCurriculums.css"
+Modal.setAppElement("#root");
 
 function AllCurriculumsPage() {
     const storedToken = localStorage.getItem("authToken");
     const API_URL = "http://localhost:5005/api";
     const [curriculums, setCurriculums] = useState([]);
     const [curriculumToDelete, setCurriculumToDelete] = useState([]);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [curriculumToDeleteId, setCurriculumToDeleteId] = useState(null);
+    
 
     useEffect(() => {
 
@@ -22,25 +28,37 @@ function AllCurriculumsPage() {
           });
       }}, []);
 
-      const deleteCurriculum = (curriculum) => {
-        axios
-          .delete(`${API_URL}/curriculums/${curriculum._id}`)
-          .then(() => {
-            setCurriculums((prevCurriculums) =>
-              prevCurriculums.filter((c) => c._id !== curriculum._id)
-            );
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+      const openModal = (curriculumId) => {
+        setCurriculumToDeleteId(curriculumId);
+        setModalIsOpen(true);
       };
+
+      const closeModal = () => {
+        setModalIsOpen(false);
+      };
+
+      const deleteCurriculum = () => {
+            axios
+              .delete(`${API_URL}/curriculums/${curriculumToDeleteId}`, { headers: { Authorization: `Bearer ${storedToken}`} })
+              .then(() => {
+                setCurriculums((prevCurriculums) =>
+                  prevCurriculums.filter((c) => c._id !== curriculumToDeleteId)
+                );
+                closeModal();
+              })
+              .catch((error) => {
+                console.error(error);
+                closeModal();
+              });
+          }
+      
   return (
     <>
-    <h1 className='font-bold text-slate-800 text-4xl p-5'>My Curriculums</h1>
+      <h1 className='font-bold text-slate-800 text-4xl p-5'>My Curriculums</h1>
 
-    <section className=" bg-base-100  grid grid-cols-2 gap-4 m-2">
+      <section className="bg-base-100 grid grid-cols-2 gap-4 m-2">
         {curriculums.map((curriculum) => (
-          <div key={curriculum.id} className="flex min-w-0 gap-x-4 shadow-lg m-2 w-full grid-cols-2">
+          <div key={curriculum._id} className="flex min-w-0 gap-x-4 shadow-lg m-2 w-full grid-cols-2">
             <div className="min-w-0 flex-auto">
               <Link to={`./update-curriculum/${curriculum._id}`}>
                 <h3 className="text-sm font-semibold leading-6 text-gray-900 ml-2">{curriculum.personalData.name}</h3>
@@ -49,20 +67,30 @@ function AllCurriculumsPage() {
               </Link>
 
               <button
-                    className="inline-flex font-semibold items-center justify-center rounded-md p-2.5 text-red-800 shadow-md hover:bg-red-800 hover:text-white m-2"
-                    onClick={() => {
-                        alert("Are you sure you want to delete?")
-                        deleteCurriculum(curriculum);
-                    }}
-                  >
-                    Delete
-                  </button>
-              
+                className="inline-flex font-semibold items-center justify-center rounded-md p-2.5 text-red-800 shadow-md hover:bg-red-800 hover:text-white m-2"
+                onClick={() => openModal(curriculum._id)}
+              >
+                Delete
+              </button>
+
             </div>
           </div>
         ))}
       </section>
-        </>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Delete Confirmation Modal"
+        className={"modal-delete-container"}
+      >
+        <div className='modal-delete-card'>
+          <p className='modal-delete-text'>Are you sure you want to delete?</p>
+          <button className='modal-delete-yes-btn' onClick={deleteCurriculum}>Yes</button>
+          <button className='modal-delete-no-btn' onClick={closeModal}>No</button>
+        </div>
+      </Modal>
+    </>
   )
 }
 

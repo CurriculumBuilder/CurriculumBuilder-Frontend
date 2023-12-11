@@ -315,6 +315,21 @@ function CurriculumPage() {
     }
   };
 
+  
+    const toolbarOptions = {
+      options: ['inline', 'list', 'textAlign', 'link'],
+      inline: {
+        options: ['bold', 'italic', 'underline', 'strikethrough'],
+      },
+      list: {
+        options: ['unordered', 'ordered'],
+      },
+      textAlign: {
+        options: ['left', 'center', 'right', "justify"],
+      },
+    };
+  
+
   return (
     <div className="main-container">
       <div className="form-container">
@@ -445,6 +460,7 @@ function CurriculumPage() {
             <Editor
               editorState={summry}
               toolbarClassName="toolbarClassName"
+              toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onEditorStateChange}
@@ -563,6 +579,7 @@ function CurriculumPage() {
             <Editor
               editorState={projects}
               toolbarClassName="toolbarClassName"
+              toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onProjectsEditorStateChange}
@@ -597,6 +614,7 @@ function CurriculumPage() {
             <Editor
               editorState={experience}
               toolbarClassName="toolbarClassName"
+              toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onExperienceEditorStateChange}
@@ -631,6 +649,7 @@ function CurriculumPage() {
             <Editor
               editorState={education}
               toolbarClassName="toolbarClassName"
+              toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onEducationEditorStateChange}
