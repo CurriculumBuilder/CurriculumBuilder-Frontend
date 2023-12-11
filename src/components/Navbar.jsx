@@ -4,12 +4,14 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../context/auth.context";
 import profile from "../assets/profile.png";
 import "../styles/Navbar.css";
+import { useDropdown } from '../context/DropdownContext';
 
 function Navbar() {
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-
+  const {isDropdownOpen, setDropdownOpen} = useDropdown();
+  console.log('isDropdownOpen:', isDropdownOpen);
+ 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
@@ -38,7 +40,8 @@ function Navbar() {
       {isDropdownOpen && isLoggedIn && (
         <div className="dropdown-menu"  >
           <ul>
-            <li>My Profile</li>
+          <Link to={"/curriculum"}><li>Create New CV</li></Link>
+            <Link to={"/my-curriculums"}><li>My Curriculums</li></Link>
             {logOutUser && <li onClick={handleLogout}>Logout</li>}
           </ul>
         </div>

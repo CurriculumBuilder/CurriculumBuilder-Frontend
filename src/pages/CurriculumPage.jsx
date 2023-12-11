@@ -13,7 +13,6 @@ import { htmlToDraft } from "html-to-draftjs";
 function CurriculumPage() {
   const { user } = useContext(AuthContext);
 
-
   const [name, setName] = useState("");
   const [htmlContentName, setHtmlContentName] = useState("");
 
@@ -25,6 +24,9 @@ function CurriculumPage() {
 
   const [address, setAddress] = useState("");
   const [htmlContentAddress, setHtmlContentAddress] = useState("");
+
+  const [position, setPosition] = useState("");
+  const [htmlContentPosition, setHtmlContentPosition] = useState("");
 
   let editorState = EditorState.createEmpty();
   const [summry, setSummry] = useState(editorState);
@@ -56,9 +58,9 @@ function CurriculumPage() {
   });
 
   const maxCharSummary = 100;
-  const maxCharProjects = 500;
+  const maxCharProjects = 1000;
   const maxCharExperience = 1000;
-  const maxCharEducation = 500;
+  const maxCharEducation = 1000;
 
   const onNameStateChange = (editorState) => {
     const contentState = editorState.getCurrentContent();
@@ -98,6 +100,16 @@ function CurriculumPage() {
 
     setHtmlContentAddress(markup);
     setAddress(text);
+  };
+
+  const onPositionStateChange = (editorState) => {
+    const contentState = editorState.getCurrentContent();
+    const text = contentState.getPlainText();
+    const rawContent = convertToRaw(contentState);
+    const markup = draftToHtml(rawContent);
+
+    setHtmlContentPosition(markup);
+    setPosition(text);
   };
 
   const onEditorStateChange = (editorState) => {
@@ -276,7 +288,8 @@ function CurriculumPage() {
         phone: phone,
         email: email,
         address: address,
-        summary: htmlContentSummry
+        position: position,
+        summary: htmlContentSummry,
       },
       links: links,
       skills: skills,
@@ -287,20 +300,20 @@ function CurriculumPage() {
       awards: awards,
     };
 
-    
     if (storedToken) {
       axios
-      .post(`${API_URL}/curriculums`, requestBody, { headers: { Authorization: `Bearer ${storedToken}`} })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log("Error creating CV from the API...");
-        console.log(error);
-      });
-  };
+        .post(`${API_URL}/curriculums`, requestBody, {
+          headers: { Authorization: `Bearer ${storedToken}` },
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("Error creating CV from the API...");
+          console.log(error);
+        });
     }
-   
+  };
 
   return (
     <div className="main-container">
@@ -320,7 +333,7 @@ function CurriculumPage() {
                 className="appearance-none block w-full bg-gray-200 text-gray-500 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
-                placeholder="Jane"
+                placeholder="Jane Doe"
                 value={name}
                 onChange={(e) => {
                   const updatedEditorState = EditorState.createWithContent(
@@ -341,7 +354,7 @@ function CurriculumPage() {
                 className="appearance-none block w-full bg-gray-200 text-gray-500 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-last-name"
                 type="text"
-                placeholder="Doe"
+                placeholder="janedoe@example.com"
                 value={email}
                 onChange={(e) => {
                   const updatedEditorState = EditorState.createWithContent(
@@ -352,6 +365,27 @@ function CurriculumPage() {
                 }}
               />
             </div>
+            <div className="w-full  px-3 mb-6 md:mb-0">
+                <label
+                  className="block tracking-wide text-gray-500 text-1xs font-bold mb-2"
+                  htmlFor="grid-last-name"
+                >
+                  Position
+                </label>
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="grid-position"
+                  type="text"
+                  placeholder="Front End Developer"
+                  value={position}
+                  onChange={(e) => {
+                    const updatedEditorState = EditorState.createWithContent(
+                      ContentState.createFromText(e.target.value)
+                    );
+                    onPositionStateChange(updatedEditorState);
+                  }}
+                />
+              </div>
           </div>
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -365,7 +399,7 @@ function CurriculumPage() {
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
                 id="grid-first-name"
                 type="text"
-                placeholder="Jane"
+                placeholder="01-123-4567-8910"
                 value={phone}
                 onChange={(e) => {
                   const updatedEditorState = EditorState.createWithContent(
@@ -386,7 +420,7 @@ function CurriculumPage() {
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="grid-last-name"
                 type="text"
-                placeholder="Doe"
+                placeholder="Berlin, Germany"
                 value={address}
                 onChange={(e) => {
                   const updatedEditorState = EditorState.createWithContent(
@@ -395,6 +429,7 @@ function CurriculumPage() {
                   onAddressStateChange(updatedEditorState);
                 }}
               />
+              
             </div>
           </div>
           <label
