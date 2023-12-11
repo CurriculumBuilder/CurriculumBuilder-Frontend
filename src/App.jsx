@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import AllCurriculumsPage from "./pages/AllCurriculumsPage";
 import { DropdownProvider } from "./context/DropdownContext";
+import UpdateCurriculum from "./pages/UpdateCurriculum";
 
 function App() {
   return (
@@ -31,6 +32,14 @@ function App() {
             element={
               <IsPrivate>
                 <AllCurriculumsPage />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/my-curriculums/update-curriculum/:curriculumId"
+            element={
+              <IsPrivate>
+                <UpdateCurriculum/>
               </IsPrivate>
             }
           />

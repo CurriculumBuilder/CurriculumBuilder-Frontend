@@ -42,7 +42,7 @@ function AllCurriculumsPage() {
         {curriculums.map((curriculum) => (
           <div key={curriculum.id} className="flex min-w-0 gap-x-4 shadow-lg m-2 w-full grid-cols-2">
             <div className="min-w-0 flex-auto">
-              <Link to={`./curriculums/${curriculum._id}`}>
+              <Link to={`./update-curriculum/${curriculum._id}`}>
                 <h3 className="text-sm font-semibold leading-6 text-gray-900 ml-2">{curriculum.personalData.name}</h3>
                 <img src="https://t3.ftcdn.net/jpg/02/48/42/64/240_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg" alt="" />
                 <p className='mt-1 truncate text-xs leading-5 text-gray-500 ml-2'>{curriculum.personalData.position}</p>

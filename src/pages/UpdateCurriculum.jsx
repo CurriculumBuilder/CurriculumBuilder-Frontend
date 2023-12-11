@@ -1,7 +1,7 @@
-import { useContext, useState, useRef } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "../context/auth.context";
 import { useReactToPrint } from "react-to-print";
-import { EditorState, convertToRaw, ContentState } from "draft-js";
+import { EditorState, convertToRaw, ContentState,convertFromHTML  } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -9,33 +9,26 @@ import "../styles/Curriculum.css";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import { htmlToDraft } from "html-to-draftjs";
+import {stateToHTML} from "draft-js-export-html";
+import {stateFromHTML} from "draft-js-import-html";
+import { useParams } from "react-router-dom";
 
-function CurriculumPage() {
+function UpdateCurriculum() {
   const { user } = useContext(AuthContext);
+  const { curriculumId } = useParams();
 
   const [name, setName] = useState("");
-  const [htmlContentName, setHtmlContentName] = useState("");
-
   const [email, setEmail] = useState("");
-  const [htmlContentEmail, setHtmlContentEmail] = useState("");
-
   const [phone, setPhone] = useState("");
-  const [htmlContentPhone, setHtmlContentPhone] = useState("");
-
   const [address, setAddress] = useState("");
-  const [htmlContentAddress, setHtmlContentAddress] = useState("");
-
   const [position, setPosition] = useState("");
-  const [htmlContentPosition, setHtmlContentPosition] = useState("");
 
-  let editorState = EditorState.createEmpty();
-  const [summry, setSummry] = useState(editorState);
+
+  const [summry, setSummry] = useState(EditorState.createEmpty());
   const [htmlContentSummry, setHtmlContentSummry] = useState("");
 
   const [links, setLinksValues] = useState([]);
-
   const [skills, setSkillsValues] = useState([]);
-
   const [languages, setLanguageValues] = useState([]);
 
   const [projects, setProjects] = useState(EditorState.createEmpty());
@@ -49,6 +42,8 @@ function CurriculumPage() {
 
   const [awards, setAwardsValues] = useState([]);
 
+
+  const storedToken = localStorage.getItem("authToken");
   const componentRef = useRef();
 
   const API_URL = "http://localhost:5005/api";
@@ -62,57 +57,10 @@ function CurriculumPage() {
   const maxCharExperience = 1000;
   const maxCharEducation = 1000;
 
-  const onNameStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
 
-    setHtmlContentName(markup);
-    setName(text);
-  };
-
-  const onEmailStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentEmail(markup);
-    setEmail(text);
-  };
-
-  const onPhoneStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentPhone(markup);
-    setPhone(text);
-  };
-
-  const onAddressStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentAddress(markup);
-    setAddress(text);
-  };
-
-  const onPositionStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentPosition(markup);
-    setPosition(text);
-  };
 
   const onEditorStateChange = (editorState) => {
+   
     const contentState = editorState.getCurrentContent();
     const text = contentState.getPlainText();
     const rawContent = convertToRaw(contentState);
@@ -120,22 +68,15 @@ function CurriculumPage() {
 
     if (text.length <= maxCharSummary) {
       setHtmlContentSummry(markup);
-      setSummry(editorState);
+      setSummry(editorState)
     }
   };
+
 
   const onContentStateChange = (contentState) => {
     console.log(contentState);
   };
 
-  const convertHTMLToContentState = (html) => {
-    return stateFromHTML(html);
-  };
-
-  const convertContentStateToHTML = () => {
-    const contentState = editorState.getCurrentContent();
-    return stateToHTML(contentState);
-  };
 
   const handleChangeLink = (index, event) => {
     const linksCopy = [...links];
@@ -188,31 +129,7 @@ function CurriculumPage() {
     setLanguageValues(languagesCopy);
   };
 
-  const onLinksStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    setLinksValues(text.split("\n"));
-  };
-
-  const onSkillsStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentSkills(markup);
-    setSkillsValues(text);
-  };
-
-  const onLanguagesStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentLanguages(markup);
-    setLanguageValues(text);
-  };
+ 
 
   const onProjectsEditorStateChange = (editorState) => {
     const contentState = editorState.getCurrentContent();
@@ -250,15 +167,6 @@ function CurriculumPage() {
     }
   };
 
-  const onAwardsStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentAwards(markup);
-    setAwardsValues(text);
-  };
 
   const handleChangeAward = (index, event) => {
     const awardsCopy = [...awards];
@@ -277,8 +185,37 @@ function CurriculumPage() {
     setAwardsValues(awardsCopy);
   };
 
+  
+
+  useEffect(() => {
+    // GET /curriculums/:curriculumId
+    axios.get(`${API_URL}/curriculums/${curriculumId}`,{
+        headers: { Authorization: `Bearer ${storedToken}` },
+      })
+        .then(response => {
+            const res= response.data
+            setName(res.personalData.name)
+            setEmail(res.personalData.email)
+            setPhone(res.personalData.phone)
+            setPosition(res.personalData.position)
+            setAddress(res.personalData.address)
+            setLinksValues(res.links)
+            setSkillsValues(res.skills)
+            setLanguageValues(res.languages)
+            setAwardsValues(res.awards)
+            setHtmlContentSummry(res.personalData.summary)
+            const contentBlock = convertFromHTML(res.personalData.summary);
+            const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+            setSummry(EditorState.createWithContent(contentState));
+        })
+        .catch((error) => {
+            console.log("Error getting project details from the API...");
+            console.log(error);
+        })
+}, []);
+
   const handleSubmit = (event) => {
-    const storedToken = localStorage.getItem("authToken");
+    
     event.preventDefault();
 
     const requestBody = {
@@ -443,7 +380,8 @@ function CurriculumPage() {
             style={{  height: "250px" }}
           >
             <Editor
-              editorState={summry}
+             editorState={summry}
+              
               toolbarClassName="toolbarClassName"
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
@@ -814,4 +752,4 @@ function CurriculumPage() {
   );
 }
 
-export default CurriculumPage;
+export default UpdateCurriculum;
