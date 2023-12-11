@@ -9,11 +9,11 @@
 }
 
 .main-section-home {
-    @apply columns-2 justify-center flex items-center
+    @apply columns-2 justify-center flex items-center 
 }
 
 .text-main-section {
-    @apply align-middle
+    @apply align-middle flex-wrap
 }
 
 .p-main-section {
@@ -23,4 +23,10 @@
 .btnHome {
     margin-left: 20px;
     @apply inline-flex items-center justify-center rounded-md p-2.5 text-white bg-blue-500 hover:bg-blue-800
+}
+
+.imgExample {
+    width: 40%;
+    
+    object-fit: fill
 }

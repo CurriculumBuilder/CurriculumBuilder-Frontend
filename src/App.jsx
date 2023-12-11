@@ -4,7 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
 import CurriculumPage from './pages/CurriculumPage';
-import HomePage from './pages/Homepage';
+import HomePage from './pages/HomePage';
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 
@@ -15,7 +15,7 @@ function App() {
       <Navbar />
       <Routes>      
         <Route path="/" element={<HomePage />} />
-        <Route path="/curriculum" element={ <CurriculumPage /> } />
+        <Route path="/curriculum" element={ <IsPrivate><CurriculumPage /></IsPrivate> } />
         <Route path="/login" element={<IsAnon> <LoginPage /> </IsAnon>} />
         <Route path="/signup" element={<IsAnon> <SignUpPage /> </IsAnon>} />
       </Routes>

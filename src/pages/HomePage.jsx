@@ -4,6 +4,7 @@ import { HashLink } from "react-router-hash-link";
 import "../styles/HomePage.css";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import  exampleCV from "../assets/exampleCV.png"
 
 function HomePage() {
   const { isLoggedIn } = useContext(AuthContext);
@@ -37,8 +38,9 @@ function HomePage() {
           )}
         </div>
         <img
-            src="http://www.listercarterhomes.com/wp-content/uploads/2013/11/dummy-image-square.jpg"
+            src={exampleCV}
             alt="cv-image"
+            className="imgExample"
           />
       </section>
 

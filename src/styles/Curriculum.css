@@ -1,28 +1,51 @@
 
-    .main-container{
-        @apply w-auto flex flex-row 
-    }
-    .preview-container{
-        @apply w-1/2 h-screen bg-slate-400 flex flex-col
-    }
-    .form-container{
-        @apply w-1/2 p-8
-    }
-    .preview-menu{
-        @apply flex flex-row-reverse p-4 
-    }
-    .preview-pdf{
-     
-        align-self: center;
-        height: 56rem;
-        width: 40rem;
-        margin: 0 auto;
-        @apply bg-white  
-    }
-   
+.main-container{
+    height: 100vh;
+    @apply w-full flex relative overflow-hidden
+}
+.preview-container{
+    height: auto;
+    @apply w-1/2  bg-slate-400 flex flex-col sticky
+}
+.form-container{
+    overflow-y: auto;
+    @apply w-1/2 p-8 
+}
+.preview-menu{
+    @apply flex flex-row-reverse p-4 
+}
+.preview-pdf{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    height: 56rem;
+    width: 40rem;
+    margin: 0 auto;
+    @apply bg-white  
+}
 
-      @page {
-        size: 7in 9.25in;
-        margin: 0; 
-        margin-left: 0 !important;
-    }
+
+  @page {
+    size: 7in 9.25in;
+    margin: 0; 
+    margin-left: 0 !important;
+}
+
+.btnCV {
+    @apply inline-flex items-center justify-center rounded-md p-2.5 text-white bg-blue-500 hover:bg-blue-800
+}
+
+.btn-save-CV {
+    margin-top: 2rem;
+    align-self: center;
+    align-items: center;
+    @apply flex w-1/2 justify-center items-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-lg hover:bg-indigo-600 hover:text-white
+}
+
+.btn-remove {
+    @apply  m-1 inline-block justify-center items-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-lg hover:bg-indigo-600 hover:text-white
+}
+
+.input-cv {
+    @apply appearance-none mr-1 inline-block bg-gray-200 text-gray-500 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white
+}
