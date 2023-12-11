@@ -670,11 +670,73 @@ function CurriculumPage() {
               </div>
             </div>
           )}
-         
-          <div
-            className="absolute"
-            dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
-          />
+          <main className="flex gap-x-10 mt-10 m-3">
+            <div className="w-2/6">
+              {(email || phone || address) && <strong className="text-xl font-medium">Contact Details</strong>}
+              <ul className="mt-2 mb-10 list-none">
+                    
+                    {email && <li className="px-2 mt-1 list-none"><strong className="mr-1">E-mail </strong>
+                        <a href="mailto:" className="block">{email}</a>
+                    </li>}
+                   {phone && <li className="px-2 mt-1 list-none"><strong className="mr-1">Phone </strong>
+                        <a href="tel:+821023456789" className="block">{phone}</a>
+                    </li>}
+                    {address && <li className="px-2 mt-1 list-none"><strong className="mr-1">Location</strong><span className="block">{address}</span></li>}
+                </ul>
+
+                {links && 
+                <ul class="mt-2">
+                {links.map((link,index)=>{
+                  return(
+                    <li className="px-2 mt-1 list-none text-xs" key={index}><a href={link}>{link}</a></li>
+                  )
+                })}  
+                </ul>}
+
+                {skills && 
+                <>
+                <strong className="text-xl font-medium">Skills</strong>
+                <ul class="mt-2 flex flex-wrap">
+                {skills.map((skill,index)=>{
+                  return(
+                    <li className="px-2 mt-1 list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded" key={index}>{skill}</li>
+                  )
+                })}  
+                </ul>
+                </>
+                }
+
+            </div>
+
+
+            <div class="w-4/6">
+            {
+              htmlContentSummry && 
+                <>
+                  <h2 class="text-2xl pb-1 border-b font-semibold">Summary</h2>
+                  <p class="mt-4 text-s"  dangerouslySetInnerHTML={{ __html: htmlContentSummry }}></p>
+                </>              
+            }
+            {
+              htmlContentSummry && 
+                <>
+                  <h2 class="text-2xl pb-1 border-b font-semibold">Summary</h2>
+                  <p class="mt-4 text-s"  dangerouslySetInnerHTML={{ __html: htmlContentSummry }}></p>
+                </>              
+            }
+
+            {
+              htmlContentSummry && 
+                <>
+                  <h2 class="text-2xl pb-1 border-b font-semibold">Summary</h2>
+                  <p class="mt-4 text-s"  dangerouslySetInnerHTML={{ __html: htmlContentSummry }}></p>
+                </>              
+            }
+              
+            </div>
+          </main>
+
+      
           
         </div>
       </div>
