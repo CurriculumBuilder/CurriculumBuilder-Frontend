@@ -33,6 +33,8 @@ function CurriculumPage() {
   const [htmlContentSummry, setHtmlContentSummry] = useState("");
 
   const [links, setLinksValues] = useState([]);
+  const [platform, setPlatform] = useState("");
+  const [url, setUrl] = useState("");
 
   const [skills, setSkillsValues] = useState([]);
 
@@ -137,12 +139,6 @@ function CurriculumPage() {
     return stateToHTML(contentState);
   };
 
-  const handleChangeLink = (index, event) => {
-    const linksCopy = [...links];
-    linksCopy[index] = event.target.value;
-    setLinksValues(linksCopy);
-  };
-
   const handleChangeSkill = (index, event) => {
     const skillsCopy = [...skills];
     skillsCopy[index] = event.target.value;
@@ -155,9 +151,16 @@ function CurriculumPage() {
     setLanguageValues(languagesCopy);
   };
 
-  const handleAddLink = (event) => {
-    event.preventDefault();
-    setLinksValues([...links, ""]);
+  const handleAddLink = () => {
+    if (platform !== "" && url !== "") {
+      const newLink = {
+        platform: platform,
+        url: url,
+      };
+      setLinksValues([...links, newLink]);
+      setPlatform("");
+      setUrl("");
+    }
   };
 
   const handleAddSkill = (event) => {
@@ -171,9 +174,9 @@ function CurriculumPage() {
   };
 
   const handleRemoveLink = (index) => {
-    const linksCopy = [...links];
-    linksCopy.splice(index, 1);
-    setLinksValues(linksCopy);
+    const updatedLinks = [...links];
+    updatedLinks.splice(index, 1);
+    setLinksValues(updatedLinks);
   };
 
   const handleRemoveSkill = (index) => {
@@ -315,20 +318,18 @@ function CurriculumPage() {
     }
   };
 
-  
-    const toolbarOptions = {
-      options: ['inline', 'list', 'textAlign', 'link'],
-      inline: {
-        options: ['bold', 'italic', 'underline', 'strikethrough'],
-      },
-      list: {
-        options: ['unordered', 'ordered'],
-      },
-      textAlign: {
-        options: ['left', 'center', 'right', "justify"],
-      },
-    };
-  
+  const toolbarOptions = {
+    options: ["inline", "list", "textAlign", "link"],
+    inline: {
+      options: ["bold", "italic", "underline", "strikethrough"],
+    },
+    list: {
+      options: ["unordered", "ordered"],
+    },
+    textAlign: {
+      options: ["left", "center", "right", "justify"],
+    },
+  };
 
   return (
     <div className="main-container">
@@ -381,26 +382,26 @@ function CurriculumPage() {
               />
             </div>
             <div className="w-full  px-3 mb-6 md:mb-0">
-                <label
-                  className="block tracking-wide text-gray-500 text-1xs font-bold mb-2"
-                  htmlFor="grid-last-name"
-                >
-                  Position
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-position"
-                  type="text"
-                  placeholder="Front End Developer"
-                  value={position}
-                  onChange={(e) => {
-                    const updatedEditorState = EditorState.createWithContent(
-                      ContentState.createFromText(e.target.value)
-                    );
-                    onPositionStateChange(updatedEditorState);
-                  }}
-                />
-              </div>
+              <label
+                className="block tracking-wide text-gray-500 text-1xs font-bold mb-2"
+                htmlFor="grid-last-name"
+              >
+                Position
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-position"
+                type="text"
+                placeholder="Front End Developer"
+                value={position}
+                onChange={(e) => {
+                  const updatedEditorState = EditorState.createWithContent(
+                    ContentState.createFromText(e.target.value)
+                  );
+                  onPositionStateChange(updatedEditorState);
+                }}
+              />
+            </div>
           </div>
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -444,7 +445,6 @@ function CurriculumPage() {
                   onAddressStateChange(updatedEditorState);
                 }}
               />
-              
             </div>
           </div>
           <label
@@ -454,8 +454,8 @@ function CurriculumPage() {
             Summary
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
-            style={{  height: "250px" }}
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            style={{ border: "1px solid black", height: "200px" }}
           >
             <Editor
               editorState={summry}
@@ -483,29 +483,34 @@ function CurriculumPage() {
           <hr className="w-96 m-3" />
 
           <div>
-            <h2 className="tblock tracking-wide text-gray-500 text-1xs font-bold mb-2">
-              Links
-            </h2>
-            {links &&
-              links.map((links, index) => (
+            <h2>Links</h2>
+            <div>
+              <select
+                value={platform}
+                onChange={(e) => setPlatform(e.target.value)}
+              >
+                <option value="">Select a link</option>
+                <option value="Platform 1">LinkedIn</option>
+                <option value="Platform 2">GitHub</option>
+                <option value="Platform 3">Website</option>
+              </select>
+              <input
+                type="text"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+              />
+              <button onClick={handleAddLink}>Add Link</button>
+            </div>
+            <div>
+              {links.map((link, index) => (
                 <div key={index}>
-                  <input
-                    type="text"
-                    className="input-cv"
-                    value={links}
-                    onChange={(event) => handleChangeLink(index, event)}
-                  />
-                  <button
-                    onClick={() => handleRemoveLink(index)}
-                    className="btn-remove"
-                  >
+                  <p>Platform: {link.platform} - URL: {link.url}</p>
+                  <button onClick={() => handleRemoveLink(index)}>
                     Remove
                   </button>
                 </div>
               ))}
-            <button onClick={handleAddLink} className="btnCV">
-              Add Link{" "}
-            </button>
+            </div>
           </div>
 
           <hr className="w-96 m-3" />
@@ -573,8 +578,8 @@ function CurriculumPage() {
             Projects
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
-            style={{  height: "250px" }}
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            style={{ border: "1px solid black", height: "200px" }}
           >
             <Editor
               editorState={projects}
@@ -605,9 +610,10 @@ function CurriculumPage() {
             Experience
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             style={{
-              height: "250px",
+              border: "1px solid black",
+              height: "200px",
               marginBottom: "20px",
             }}
           >
@@ -640,9 +646,10 @@ function CurriculumPage() {
             Education
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             style={{
-              height: "250px",
+              border: "1px solid black",
+              height: "200px",
               marginBottom: "20px",
             }}
           >
@@ -718,115 +725,102 @@ function CurriculumPage() {
               </div>
               <div className="grid justify-items-end">
                 <h1 className="text-3xl font-extrabold">{name}</h1>
-                {position && <p className="text-lg mt-1">{position}</p>}
+                <p className="text-lg mt-1">Front-End Developer</p>
               </div>
             </div>
           )}
           <main className="flex gap-x-10 mt-10 m-3">
             <div className="w-2/6">
-              {(email || phone || address) && <strong className="text-xl font-medium">Contact Details</strong>}
+              {(email || phone || address) && (
+                <strong className="text-xl font-medium">Contact Details</strong>
+              )}
               <ul className="mt-2 mb-10 list-none">
-                    
-                    {email && <li className="px-1 mt-1 list-none"><strong className="mr-1">E-mail </strong>
-                        <a href="mailto:" className="block">{email}</a>
-                    </li>}
-                   {phone && <li className="px-1  list-none"><strong className="mr-1">Phone </strong>
-                        <a href="tel:+821023456789" className="block">{phone}</a>
-                    </li>}
-                    {address && <li className="px-1  list-none"><strong className="mr-1">Location</strong><span className="block">{address}</span></li>}
+                {email && (
+                  <li className="px-2 mt-1 list-none">
+                    <strong className="mr-1">E-mail </strong>
+                    <a href="mailto:" className="block">
+                      {email}
+                    </a>
+                  </li>
+                )}
+                {phone && (
+                  <li className="px-2 mt-1 list-none">
+                    <strong className="mr-1">Phone </strong>
+                    <a href="tel:+821023456789" className="block">
+                      {phone}
+                    </a>
+                  </li>
+                )}
+                {address && (
+                  <li className="px-2 mt-1 list-none">
+                    <strong className="mr-1">Location</strong>
+                    <span className="block">{address}</span>
+                  </li>
+                )}
+              </ul>
+
+              {/* {links && (
+                <ul class="mt-2">
+                  {links.map((link, index) => {
+                    return (
+                      <li className="px-2 mt-1 list-none text-xs" key={index}>
+                        <a href={link}>{link}</a>
+                      </li>
+                    );
+                  })}
                 </ul>
+              )} */}
 
-                {links && 
-                <ul className="mt-2">
-                {links.map((link,index)=>{
-                  return(
-                    <li className="px-2 mt-1 list-none text-xs" key={index}><a href={link}>{link}</a></li>
-                  )
-                })}  
-                </ul>}
-
-                {skills.length>0 && 
+              {skills && (
                 <>
-                <strong className="text-xl font-medium mt-1">Skills</strong>
-                <ul className="mt-2 flex flex-wrap">
-                {skills.map((skill,index)=>{
-                  return(
-                    <li className="px-2 mt-1 list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded" key={index}>{skill}</li>
-                  )
-                })}  
-                </ul>
+                  <strong className="text-xl font-medium">Skills</strong>
+                  <ul class="mt-2 flex flex-wrap">
+                    {skills.map((skill, index) => {
+                      return (
+                        <li
+                          className="px-2 mt-1 list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded"
+                          key={index}
+                        >
+                          {skill}
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </>
-                }
-
-                {languages.length>0 && 
-                <>
-                <strong className="text-xl font-medium mt-1">Languages</strong>
-                <ul className="mt-2 flex flex-col">
-                {languages.map((language,index)=>{
-                  return(
-                    <li className="px-2 mt-1 list-none text-s" key={index}>{language}</li>
-                  )
-                })}  
-                </ul>
-                </>
-                }
-
-                {
-              htmlContentEducation && 
-                <>
-                  <h2 className="text-xl font-medium mt-1">Education</h2>
-                    {htmlContentEducation}
-                    <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentEducation }}></p>
-                
-                  
-                </>              
-            }
-
-            {awards.length>0 && 
-                <>
-                <strong className="text-xl font-medium mt-1">Awards & Achievements</strong>
-                <ul className="mt-2 flex flex-col">
-                {awards.map((award,index)=>{
-                  return(
-                    <li className="px-2 mt-1 list-none text-s" key={index}>{award}</li>
-                  )
-                })}  
-                </ul>
-                </>
-                }
-
+              )}
             </div>
 
+            <div class="w-4/6">
+              {htmlContentSummry && (
+                <>
+                  <h2 class="text-2xl pb-1 border-b font-semibold">Summary</h2>
+                  <p
+                    class="mt-4 text-s"
+                    dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
+                  ></p>
+                </>
+              )}
+              {htmlContentSummry && (
+                <>
+                  <h2 class="text-2xl pb-1 border-b font-semibold">Summary</h2>
+                  <p
+                    class="mt-4 text-s"
+                    dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
+                  ></p>
+                </>
+              )}
 
-            <div className="w-4/6">
-            {
-              htmlContentSummry && 
+              {htmlContentSummry && (
                 <>
-                  <h2 className="text-2xl pb-1 border-b font-semibold">Summary</h2>
-                  <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentSummry }}></p>
-                </>              
-            }
-            {
-              htmlContentProjects && 
-                <>
-                  <h2 className="text-2xl pb-1 border-b font-semibold">Projects</h2>
-                  <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentProjects }}></p>
-                </>              
-            }
-
-            {
-              htmlContentExperience && 
-                <>
-                  <h2 className="text-2xl pb-1 border-b font-semibold">Work Experience</h2>
-                  <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentExperience }}></p>
-                </>              
-            }
-              
+                  <h2 class="text-2xl pb-1 border-b font-semibold">Summary</h2>
+                  <p
+                    class="mt-4 text-s"
+                    dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
+                  ></p>
+                </>
+              )}
             </div>
           </main>
-
-      
-          
         </div>
       </div>
     </div>
