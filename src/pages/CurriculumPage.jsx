@@ -24,7 +24,7 @@ function CurriculumPage() {
   const [htmlContentSummry, setHtmlContentSummry] = useState("");
 
   const [links, setLinksValues] = useState([]);
-  const [platform, setPlatform] = useState("");
+  const [label, setLabel] = useState("");
   const [url, setUrl] = useState("");
 
   const [skills, setSkillsValues] = useState([]);
@@ -94,13 +94,13 @@ function CurriculumPage() {
 
   const handleAddLink = (e) => {
     e.preventDefault();
-    if (platform !== "" && url !== "") {
+    if (label !== "" && url !== "") {
       const newLink = {
-        platform: platform,
+        label: label,
         url: url,
       };
       setLinksValues([...links, newLink]);
-      setPlatform("");
+      setLabel("");
       setUrl("");
     }
   };
@@ -369,8 +369,8 @@ function CurriculumPage() {
             <h2>Links</h2>
             <div>
               <select
-                value={platform}
-                onChange={(e) => setPlatform(e.target.value)}
+                value={label}
+                onChange={(e) => setLabel(e.target.value)}
               >
                 <option value="">Select a link</option>
                 <option value="Platform 1">LinkedIn</option>
@@ -387,7 +387,7 @@ function CurriculumPage() {
             <div>
               {links.map((link, index) => (
                 <div key={index}>
-                  <p>Platform: {link.platform} - URL: {link.url}</p>
+                  <p>label: {link.label} - URL: {link.url}</p>
                   <button onClick={() => handleRemoveLink(index)}>
                     Remove
                   </button>
