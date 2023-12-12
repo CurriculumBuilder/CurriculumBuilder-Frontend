@@ -14,20 +14,11 @@ function CurriculumPage() {
   const { user } = useContext(AuthContext);
 
   const [name, setName] = useState("");
-  const [htmlContentName, setHtmlContentName] = useState("");
-
   const [email, setEmail] = useState("");
-  const [htmlContentEmail, setHtmlContentEmail] = useState("");
-
   const [phone, setPhone] = useState("");
-  const [htmlContentPhone, setHtmlContentPhone] = useState("");
-
   const [address, setAddress] = useState("");
-  const [htmlContentAddress, setHtmlContentAddress] = useState("");
-
   const [position, setPosition] = useState("");
-  const [htmlContentPosition, setHtmlContentPosition] = useState("");
-
+ 
   let editorState = EditorState.createEmpty();
   const [summry, setSummry] = useState(editorState);
   const [htmlContentSummry, setHtmlContentSummry] = useState("");
@@ -64,55 +55,12 @@ function CurriculumPage() {
   const maxCharExperience = 1000;
   const maxCharEducation = 1000;
 
-  const onNameStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
 
-    setHtmlContentName(markup);
-    setName(text);
-  };
 
-  const onEmailStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
 
-    setHtmlContentEmail(markup);
-    setEmail(text);
-  };
 
-  const onPhoneStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
 
-    setHtmlContentPhone(markup);
-    setPhone(text);
-  };
 
-  const onAddressStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentAddress(markup);
-    setAddress(text);
-  };
-
-  const onPositionStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentPosition(markup);
-    setPosition(text);
-  };
 
   const onEditorStateChange = (editorState) => {
     const contentState = editorState.getCurrentContent();
@@ -130,14 +78,7 @@ function CurriculumPage() {
     console.log(contentState);
   };
 
-  const convertHTMLToContentState = (html) => {
-    return stateFromHTML(html);
-  };
 
-  const convertContentStateToHTML = () => {
-    const contentState = editorState.getCurrentContent();
-    return stateToHTML(contentState);
-  };
 
   const handleChangeSkill = (index, event) => {
     const skillsCopy = [...skills];
@@ -151,7 +92,8 @@ function CurriculumPage() {
     setLanguageValues(languagesCopy);
   };
 
-  const handleAddLink = () => {
+  const handleAddLink = (e) => {
+    e.preventDefault();
     if (platform !== "" && url !== "") {
       const newLink = {
         platform: platform,
@@ -191,30 +133,8 @@ function CurriculumPage() {
     setLanguageValues(languagesCopy);
   };
 
-  const onLinksStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    setLinksValues(text.split("\n"));
-  };
 
-  const onSkillsStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-    setHtmlContentSkills(markup);
-    setSkillsValues(text);
-  };
 
-  const onLanguagesStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentLanguages(markup);
-    setLanguageValues(text);
-  };
 
   const onProjectsEditorStateChange = (editorState) => {
     const contentState = editorState.getCurrentContent();
@@ -252,15 +172,6 @@ function CurriculumPage() {
     }
   };
 
-  const onAwardsStateChange = (editorState) => {
-    const contentState = editorState.getCurrentContent();
-    const text = contentState.getPlainText();
-    const rawContent = convertToRaw(contentState);
-    const markup = draftToHtml(rawContent);
-
-    setHtmlContentAwards(markup);
-    setAwardsValues(text);
-  };
 
   const handleChangeAward = (index, event) => {
     const awardsCopy = [...awards];
@@ -350,12 +261,7 @@ function CurriculumPage() {
                 type="text"
                 placeholder="Jane Doe"
                 value={name}
-                onChange={(e) => {
-                  const updatedEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(e.target.value)
-                  );
-                  onNameStateChange(updatedEditorState);
-                }}
+                onChange={(e)=>setName(e.target.value)}
               />
             </div>
             <div className="w-full md:w-1/2 px-3">
@@ -371,13 +277,7 @@ function CurriculumPage() {
                 type="text"
                 placeholder="janedoe@example.com"
                 value={email}
-                onChange={(e) => {
-                  const updatedEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(e.target.value)
-                  );
-                  onEmailStateChange(updatedEditorState);
-                  setEmail(e.target.value);
-                }}
+                onChange={(e)=>setEmail(e.target.value)}
               />
             </div>
             <div className="w-full  px-3 mb-6 md:mb-0">
@@ -393,12 +293,7 @@ function CurriculumPage() {
                 type="text"
                 placeholder="Front End Developer"
                 value={position}
-                onChange={(e) => {
-                  const updatedEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(e.target.value)
-                  );
-                  onPositionStateChange(updatedEditorState);
-                }}
+                onChange={(e)=>setPosition(e.target.value)}
               />
             </div>
           </div>
@@ -416,12 +311,7 @@ function CurriculumPage() {
                 type="text"
                 placeholder="01-123-4567-8910"
                 value={phone}
-                onChange={(e) => {
-                  const updatedEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(e.target.value)
-                  );
-                  onPhoneStateChange(updatedEditorState);
-                }}
+                onChange={(e)=>setPhone(e.target.value)}
               />
             </div>
             <div className="w-full md:w-1/2 px-3">
@@ -437,12 +327,7 @@ function CurriculumPage() {
                 type="text"
                 placeholder="Berlin, Germany"
                 value={address}
-                onChange={(e) => {
-                  const updatedEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(e.target.value)
-                  );
-                  onAddressStateChange(updatedEditorState);
-                }}
+                onChange={(e)=>setAddress(e.target.value)}
               />
             </div>
           </div>
@@ -472,7 +357,6 @@ function CurriculumPage() {
             />
           </div>
           <p className=" text-gray-400">
-            {" "}
             {maxCharSummary -
               summry.getCurrentContent().getPlainText("").length}{" "}
             / {maxCharSummary}
@@ -596,7 +480,6 @@ function CurriculumPage() {
             />
           </div>
           <p className="text-gray-400">
-            {" "}
             {maxCharProjects -
               projects.getCurrentContent().getPlainText("").length}{" "}
             / {maxCharProjects}
@@ -724,102 +607,115 @@ function CurriculumPage() {
               </div>
               <div className="grid justify-items-end">
                 <h1 className="text-3xl font-extrabold">{name}</h1>
-                <p className="text-lg mt-1">Front-End Developer</p>
+                {position && <p className="text-lg mt-1">{position}</p>}
               </div>
             </div>
           )}
           <main className="flex gap-x-10 mt-10 m-3">
             <div className="w-2/6">
-              {(email || phone || address) && (
-                <strong className="text-xl font-medium">Contact Details</strong>
-              )}
+              {(email || phone || address) && <strong className="text-xl font-medium">Contact Details</strong>}
               <ul className="mt-2 mb-10 list-none">
-                {email && (
-                  <li className="px-2 mt-1 list-none">
-                    <strong className="mr-1">E-mail </strong>
-                    <a href="mailto:" className="block">
-                      {email}
-                    </a>
-                  </li>
-                )}
-                {phone && (
-                  <li className="px-2 mt-1 list-none">
-                    <strong className="mr-1">Phone </strong>
-                    <a href="tel:+821023456789" className="block">
-                      {phone}
-                    </a>
-                  </li>
-                )}
-                {address && (
-                  <li className="px-2 mt-1 list-none">
-                    <strong className="mr-1">Location</strong>
-                    <span className="block">{address}</span>
-                  </li>
-                )}
-              </ul>
-
-              {/* {links && (
-                <ul class="mt-2">
-                  {links.map((link, index) => {
-                    return (
-                      <li className="px-2 mt-1 list-none text-xs" key={index}>
-                        <a href={link}>{link}</a>
-                      </li>
-                    );
-                  })}
+                    
+                    {email && <li className="px-1 mt-1 list-none"><strong className="mr-1">E-mail </strong>
+                        <a href="mailto:" className="block">{email}</a>
+                    </li>}
+                   {phone && <li className="px-1  list-none"><strong className="mr-1">Phone </strong>
+                        <a href="tel:+821023456789" className="block">{phone}</a>
+                    </li>}
+                    {address && <li className="px-1  list-none"><strong className="mr-1">Location</strong><span className="block">{address}</span></li>}
                 </ul>
-              )} */}
+{/* 
+                {links && 
+                <ul className="mt-2">
+                {links.map((link,index)=>{
+                  return(
+                    <li className="px-2 mt-1 list-none text-xs" key={index}><a href={link}>{link}</a></li>
+                  )
+                })}  
+                </ul>} */}
 
-              {skills && (
+                {skills.length>0 && 
                 <>
-                  <strong className="text-xl font-medium">Skills</strong>
-                  <ul class="mt-2 flex flex-wrap">
-                    {skills.map((skill, index) => {
-                      return (
-                        <li
-                          className="px-2 mt-1 list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded"
-                          key={index}
-                        >
-                          {skill}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                <strong className="text-xl font-medium mt-1">Skills</strong>
+                <ul className="mt-2 flex flex-wrap">
+                {skills.map((skill,index)=>{
+                  return(
+                    <li className="px-2 mt-1 list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded" key={index}>{skill}</li>
+                  )
+                })}  
+                </ul>
                 </>
-              )}
+                }
+
+                {languages.length>0 && 
+                <>
+                <strong className="text-xl font-medium mt-1">Languages</strong>
+                <ul className="mt-2 flex flex-col">
+                {languages.map((language,index)=>{
+                  return(
+                    <li className="px-2 mt-1 list-none text-s" key={index}>{language}</li>
+                  )
+                })}  
+                </ul>
+                </>
+                }
+
+                {
+              htmlContentEducation && 
+                <>
+                  <h2 className="text-xl font-medium mt-1">Education</h2>
+                   
+                    <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentEducation }}></p>
+                
+                  
+                </>              
+            }
+
+            {awards.length>0 && 
+                <>
+                <strong className="text-xl font-medium mt-1">Awards & Achievements</strong>
+                <ul className="mt-2 flex flex-col">
+                {awards.map((award,index)=>{
+                  return(
+                    <li className="px-2 mt-1 list-none text-s" key={index}>{award}</li>
+                  )
+                })}  
+                </ul>
+                </>
+                }
+
             </div>
 
-            <div class="w-4/6">
-              {htmlContentSummry && (
-                <>
-                  <h2 class="text-2xl pb-1 border-b font-semibold">Summary</h2>
-                  <p
-                    class="mt-4 text-s"
-                    dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
-                  ></p>
-                </>
-              )}
-              {htmlContentSummry && (
-                <>
-                  <h2 class="text-2xl pb-1 border-b font-semibold">Summary</h2>
-                  <p
-                    class="mt-4 text-s"
-                    dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
-                  ></p>
-                </>
-              )}
 
-              {htmlContentSummry && (
+            <div className="w-4/6">
+            {
+              htmlContentSummry && 
                 <>
-                  <h2 class="text-2xl pb-1 border-b font-semibold">Summary</h2>
-                  <p
-                    class="mt-4 text-s"
-                    dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
-                  ></p>
-                </>
-              )}
+                  <h2 className="text-2xl pb-1 border-b font-semibold">Summary</h2>
+                  <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentSummry }}></p>
+                </>              
+            }
+            {
+              htmlContentProjects && 
+                <>
+                  <h2 className="text-2xl pb-1 border-b font-semibold">Projects</h2>
+                  <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentProjects }}></p>
+                </>              
+            }
+
+            {
+              htmlContentExperience && 
+                <>
+                  <h2 className="text-2xl pb-1 border-b font-semibold">Work Experience</h2>
+                  <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentExperience }}></p>
+                </>              
+            }
+              
             </div>
           </main>
+
+      
+          
         </div>
       </div>
     </div>

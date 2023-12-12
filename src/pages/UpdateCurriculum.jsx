@@ -27,6 +27,9 @@ function UpdateCurriculum() {
   const [htmlContentSummry, setHtmlContentSummry] = useState("");
 
   const [links, setLinksValues] = useState([]);
+  const [platform, setPlatform] = useState("");
+  const [url, setUrl] = useState("");
+
   const [skills, setSkillsValues] = useState([]);
   const [languages, setLanguageValues] = useState([]);
 
@@ -95,9 +98,17 @@ function UpdateCurriculum() {
     setLanguageValues(languagesCopy);
   };
 
-  const handleAddLink = (event) => {
-    event.preventDefault();
-    setLinksValues([...links, ""]);
+  const handleAddLink = (e) => {
+    e.preventDefault();
+    if (platform !== "" && url !== "") {
+      const newLink = {
+        platform: platform,
+        url: url,
+      };
+      setLinksValues([...links, newLink]);
+      setPlatform("");
+      setUrl("");
+    }
   };
 
   const handleAddSkill = (event) => {
@@ -111,9 +122,9 @@ function UpdateCurriculum() {
   };
 
   const handleRemoveLink = (index) => {
-    const linksCopy = [...links];
-    linksCopy.splice(index, 1);
-    setLinksValues(linksCopy);
+    const updatedLinks = [...links];
+    updatedLinks.splice(index, 1);
+    setLinksValues(updatedLinks);
   };
 
   const handleRemoveSkill = (index) => {
@@ -412,29 +423,34 @@ function UpdateCurriculum() {
           <hr className="w-96 m-3" />
 
           <div>
-            <h2 className="tblock tracking-wide text-gray-500 text-1xs font-bold mb-2">
-              Links
-            </h2>
-            {links &&
-              links.map((links, index) => (
+            <h2>Links</h2>
+            <div>
+              <select
+                value={platform}
+                onChange={(e) => setPlatform(e.target.value)}
+              >
+                <option value="">Select a link</option>
+                <option value="Platform 1">LinkedIn</option>
+                <option value="Platform 2">GitHub</option>
+                <option value="Platform 3">Website</option>
+              </select>
+              <input
+                type="text"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+              />
+              <button onClick={handleAddLink}>Add Link</button>
+            </div>
+            <div>
+              {links.map((link, index) => (
                 <div key={index}>
-                  <input
-                    type="text"
-                    className="input-cv"
-                    value={links}
-                    onChange={(event) => handleChangeLink(index, event)}
-                  />
-                  <button
-                    onClick={() => handleRemoveLink(index)}
-                    className="btn-remove"
-                  >
+                  <p>Platform: {link.platform} - URL: {link.url}</p>
+                  <button onClick={() => handleRemoveLink(index)}>
                     Remove
                   </button>
                 </div>
               ))}
-            <button onClick={handleAddLink} className="btnCV">
-              Add Link{" "}
-            </button>
+            </div>
           </div>
 
           <hr className="w-96 m-3" />
@@ -662,7 +678,7 @@ function UpdateCurriculum() {
                     </li>}
                     {address && <li className="px-1  list-none"><strong className="mr-1">Location</strong><span className="block">{address}</span></li>}
                 </ul>
-
+{/* 
                 {links && 
                 <ul className="mt-2">
                 {links.map((link,index)=>{
@@ -670,7 +686,7 @@ function UpdateCurriculum() {
                     <li className="px-2 mt-1 list-none text-xs" key={index}><a href={link}>{link}</a></li>
                   )
                 })}  
-                </ul>}
+                </ul>} */}
 
                 {skills.length>0 && 
                 <>
