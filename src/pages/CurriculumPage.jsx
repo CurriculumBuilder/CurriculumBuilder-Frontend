@@ -9,6 +9,9 @@ import "../styles/Curriculum.css";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import { htmlToDraft } from "html-to-draftjs";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function CurriculumPage() {
   const { user } = useContext(AuthContext);
@@ -180,6 +183,7 @@ function CurriculumPage() {
   const handleSubmit = (event) => {
     const storedToken = localStorage.getItem("authToken");
     event.preventDefault();
+      
 
     const requestBody = {
       userId: user._id,
@@ -199,20 +203,71 @@ function CurriculumPage() {
       education: htmlContentEducation,
       awards: awards,
     };
-
-    if (storedToken) {
-      axios
-        .post(`${API_URL}/api/curriculums`, requestBody, {
-          headers: { Authorization: `Bearer ${storedToken}` },
-        })
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log("Error creating CV from the API...");
-          console.log(error);
-        });
+console.log("Lengthhhhhhhhh",htmlContentSummry.length)
+    if(htmlContentSummry.length <= 8)
+    {
+      toast.error('Summary Required!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
+
+    if(skills.length <= 0)
+    {
+      toast.error('Skills Required!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
+    if(languages.length <= 0)
+    {
+      toast.error('Language Required!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
+
+      
+        if (storedToken && skills.length > 0 && languages.length > 0 && htmlContentSummry.length >= 8) {
+          axios
+            .post(`${API_URL}/api/curriculums`, requestBody, {
+              headers: { Authorization: `Bearer ${storedToken}` },
+            })
+            .then((response) => {
+              console.log(response.data);
+              toast.success('Successfully created CV!', {
+                position: "bottom-center",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+            })
+            .catch((error) => {
+              console.log("Error creating CV from the API...");
+              console.log(error);
+            });
+        }
+      
   };
 
   const toolbarOptions = {
@@ -330,7 +385,7 @@ function CurriculumPage() {
             Summary
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{ border: "1px solid black", height: "200px" }}
           >
             <Editor
@@ -474,7 +529,7 @@ function CurriculumPage() {
             Projects
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{ border: "1px solid black", height: "200px" }}
           >
             <Editor
@@ -505,7 +560,7 @@ function CurriculumPage() {
             Experience
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{
               border: "1px solid black",
               height: "200px",
@@ -541,7 +596,7 @@ function CurriculumPage() {
             Education
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{
               border: "1px solid black",
               height: "200px",
@@ -594,7 +649,7 @@ function CurriculumPage() {
               Add Award{" "}
             </button>
           </div>
-
+          <ToastContainer />
           <button type="submit" className="btn-save-CV">
             Save CV
           </button>
