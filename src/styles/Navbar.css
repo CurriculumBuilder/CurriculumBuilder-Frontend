@@ -18,10 +18,12 @@
   .dropdown-menu {
     position: absolute;
     top: 100%;
-    box-shadow:  rgba(0, 0, 0, 0.1);
+    right: 0;
+    box-shadow: rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    @apply bg-slate-800 block -right-8 w-40 rounded-md text-center
-  }
+    @apply bg-slate-800 block w-40 rounded-md text-center md:-right-8 lg:-right-8
+
+}
   
   .dropdown-menu ul {
     list-style: none;

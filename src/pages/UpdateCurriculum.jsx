@@ -1,7 +1,12 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "../context/auth.context";
 import { useReactToPrint } from "react-to-print";
-import { EditorState, convertToRaw, ContentState,convertFromHTML  } from "draft-js";
+import {
+  EditorState,
+  convertToRaw,
+  ContentState,
+  convertFromHTML,
+} from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -9,8 +14,8 @@ import "../styles/Curriculum.css";
 import DOMPurify from "dompurify";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function UpdateCurriculum() {
   const { user } = useContext(AuthContext);
@@ -22,12 +27,11 @@ function UpdateCurriculum() {
   const [address, setAddress] = useState("");
   const [position, setPosition] = useState("");
 
-
   const [summry, setSummry] = useState(EditorState.createEmpty());
   const [htmlContentSummry, setHtmlContentSummry] = useState("");
 
   const [links, setLinksValues] = useState([]);
-  const [platform, setPlatform] = useState("");
+  const [label, setlabel] = useState("");
   const [url, setUrl] = useState("");
 
   const [skills, setSkillsValues] = useState([]);
@@ -44,11 +48,10 @@ function UpdateCurriculum() {
 
   const [awards, setAwardsValues] = useState([]);
 
-
   const storedToken = localStorage.getItem("authToken");
   const componentRef = useRef();
 
-  const API_URL = import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -59,10 +62,7 @@ function UpdateCurriculum() {
   const maxCharExperience = 1000;
   const maxCharEducation = 1000;
 
-
-
   const onEditorStateChange = (editorState) => {
-   
     const contentState = editorState.getCurrentContent();
     const text = contentState.getPlainText();
     const rawContent = convertToRaw(contentState);
@@ -70,15 +70,13 @@ function UpdateCurriculum() {
 
     if (text.length <= maxCharSummary) {
       setHtmlContentSummry(markup);
-      setSummry(editorState)
+      setSummry(editorState);
     }
   };
-
 
   const onContentStateChange = (contentState) => {
     console.log(contentState);
   };
-
 
   const handleChangeLink = (index, event) => {
     const linksCopy = [...links];
@@ -100,13 +98,13 @@ function UpdateCurriculum() {
 
   const handleAddLink = (e) => {
     e.preventDefault();
-    if (platform !== "" && url !== "") {
+    if (label !== "" && url !== "") {
       const newLink = {
-        platform: platform,
+        label: label,
         url: url,
       };
       setLinksValues([...links, newLink]);
-      setPlatform("");
+      setlabel("");
       setUrl("");
     }
   };
@@ -138,8 +136,6 @@ function UpdateCurriculum() {
     languagesCopy.splice(index, 1);
     setLanguageValues(languagesCopy);
   };
-
- 
 
   const onProjectsEditorStateChange = (editorState) => {
     const contentState = editorState.getCurrentContent();
@@ -177,7 +173,6 @@ function UpdateCurriculum() {
     }
   };
 
-
   const handleChangeAward = (index, event) => {
     const awardsCopy = [...awards];
     awardsCopy[index] = event.target.value;
@@ -195,54 +190,59 @@ function UpdateCurriculum() {
     setAwardsValues(awardsCopy);
   };
 
-  
-
   useEffect(() => {
     // GET /curriculums/:curriculumId
-    axios.get(`${API_URL}/api/curriculums/${curriculumId}`,{
+    axios
+      .get(`${API_URL}/api/curriculums/${curriculumId}`, {
         headers: { Authorization: `Bearer ${storedToken}` },
       })
-        .then(response => {
-            const res= response.data
-            setName(res.personalData.name)
-            setEmail(res.personalData.email)
-            setPhone(res.personalData.phone)
-            setPosition(res.personalData.position)
-            setAddress(res.personalData.address)
-            setLinksValues(res.links)
-            setSkillsValues(res.skills)
-            setLanguageValues(res.languages)
-            setAwardsValues(res.awards)
+      .then((response) => {
+        const res = response.data;
+        setName(res.personalData.name);
+        setEmail(res.personalData.email);
+        setPhone(res.personalData.phone);
+        setPosition(res.personalData.position);
+        setAddress(res.personalData.address);
+        setLinksValues(res.links);
+        setSkillsValues(res.skills);
+        setLanguageValues(res.languages);
+        setAwardsValues(res.awards);
 
-            setHtmlContentSummry(res.personalData.summary)
-            const contentBlockSummary = convertFromHTML(res.personalData.summary);
-            const contentStateSummary = ContentState.createFromBlockArray(contentBlockSummary.contentBlocks);
-            setSummry(EditorState.createWithContent(contentStateSummary));
+        setHtmlContentSummry(res.personalData.summary);
+        const contentBlockSummary = convertFromHTML(res.personalData.summary);
+        const contentStateSummary = ContentState.createFromBlockArray(
+          contentBlockSummary.contentBlocks
+        );
+        setSummry(EditorState.createWithContent(contentStateSummary));
 
-            setHtmlContentProjects(res.projects)
-            const contentBlockProjects = convertFromHTML(res.projects);
-            const contentStateProjects  = ContentState.createFromBlockArray(contentBlockProjects.contentBlocks);
-            setProjects(EditorState.createWithContent(contentStateProjects));
+        setHtmlContentProjects(res.projects);
+        const contentBlockProjects = convertFromHTML(res.projects);
+        const contentStateProjects = ContentState.createFromBlockArray(
+          contentBlockProjects.contentBlocks
+        );
+        setProjects(EditorState.createWithContent(contentStateProjects));
 
-            setHtmlContentExperience(res.experience)
-            const contentBlockExperience = convertFromHTML(res.experience);
-            const contentStateExperience  = ContentState.createFromBlockArray(contentBlockExperience.contentBlocks);
-            setExperience(EditorState.createWithContent(contentStateExperience));
+        setHtmlContentExperience(res.experience);
+        const contentBlockExperience = convertFromHTML(res.experience);
+        const contentStateExperience = ContentState.createFromBlockArray(
+          contentBlockExperience.contentBlocks
+        );
+        setExperience(EditorState.createWithContent(contentStateExperience));
 
-            setHtmlContentEducation(res.education)
-            const contentBlockEducation = convertFromHTML(res.education);
-            const contentStateEducation  = ContentState.createFromBlockArray(contentBlockEducation.contentBlocks);
-            setEducation(EditorState.createWithContent(contentStateEducation));
-
-        })
-        .catch((error) => {
-            console.log("Error getting project details from the API...");
-            console.log(error);
-        })
-}, []);
+        setHtmlContentEducation(res.education);
+        const contentBlockEducation = convertFromHTML(res.education);
+        const contentStateEducation = ContentState.createFromBlockArray(
+          contentBlockEducation.contentBlocks
+        );
+        setEducation(EditorState.createWithContent(contentStateEducation));
+      })
+      .catch((error) => {
+        console.log("Error getting project details from the API...");
+        console.log(error);
+      });
+  }, []);
 
   const handleSubmit = (event) => {
-    
     event.preventDefault();
 
     const requestBody = {
@@ -270,7 +270,7 @@ function UpdateCurriculum() {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then((response) => {
-          toast.success('Updated Successfully!', {
+          toast.success("Updated Successfully!", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -282,7 +282,7 @@ function UpdateCurriculum() {
           console.log(response.data);
         })
         .catch((error) => {
-          toast.error('Update Failed!', {
+          toast.error("Update Failed!", {
             position: "top-right",
             autoClose: 3000,
             hideProgressBar: false,
@@ -295,6 +295,19 @@ function UpdateCurriculum() {
           console.log(error);
         });
     }
+  };
+
+  const toolbarOptions = {
+    options: ["inline", "list", "textAlign", "link"],
+    inline: {
+      options: ["bold", "italic", "underline", "strikethrough"],
+    },
+    list: {
+      options: ["unordered", "ordered"],
+    },
+    textAlign: {
+      options: ["left", "center", "right", "justify"],
+    },
   };
 
   return (
@@ -337,21 +350,21 @@ function UpdateCurriculum() {
               />
             </div>
             <div className="w-full  px-3 mb-6 md:mb-0">
-                <label
-                  className="block tracking-wide text-gray-500 text-1xs font-bold mb-2"
-                  htmlFor="grid-last-name"
-                >
-                  Position
-                </label>
-                <input
-                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="grid-position"
-                  type="text"
-                  placeholder="Front End Developer"
-                  value={position}
-                  onChange={(e) => setPosition(e.target.value)}
-                />
-              </div>
+              <label
+                className="block tracking-wide text-gray-500 text-1xs font-bold mb-2"
+                htmlFor="grid-last-name"
+              >
+                Position
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="grid-position"
+                type="text"
+                placeholder="Front End Developer"
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+              />
+            </div>
           </div>
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -385,7 +398,6 @@ function UpdateCurriculum() {
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
-              
             </div>
           </div>
           <label
@@ -396,11 +408,12 @@ function UpdateCurriculum() {
           </label>
           <div
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
-            style={{  height: "250px" }}
+            style={{ height: "250px" }}
           >
             <Editor
-             editorState={summry}    
+              editorState={summry}
               toolbarClassName="toolbarClassName"
+              toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onEditorStateChange}
@@ -423,29 +436,49 @@ function UpdateCurriculum() {
           <hr className="w-96 m-3" />
 
           <div>
-            <h2>Links</h2>
+            <h2 className="block tracking-wide text-gray-500 text-1xs font-bold mb-2">
+              Links
+            </h2>
             <div>
               <select
-                value={platform}
-                onChange={(e) => setPlatform(e.target.value)}
+                value={label}
+                onChange={(e) => setlabel(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-2/5 p-2.5"
               >
                 <option value="">Select a link</option>
-                <option value="Platform 1">LinkedIn</option>
-                <option value="Platform 2">GitHub</option>
-                <option value="Platform 3">Website</option>
+                <option value="linkedIn">LinkedIn</option>
+                <option value="gitHub">GitHub</option>
+                <option value="portfolio">Portfolio</option>
               </select>
               <input
                 type="text"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
+                className="appearance-none ml-2 mr-2 w-2/5 bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               />
-              <button onClick={handleAddLink}>Add Link</button>
+              <button onClick={handleAddLink} className="btnCV py-1.5">
+                Add Link
+              </button>
             </div>
             <div>
               {links.map((link, index) => (
                 <div key={index}>
-                  <p>Platform: {link.platform} - URL: {link.url}</p>
-                  <button onClick={() => handleRemoveLink(index)}>
+                  <p className="my-3 mr-2 text-gray-500 font-medium inline-block">
+                    <svg
+                      className=" inline-block w-3.5 h-3.5 me-2 text-green-500 dark:text-green-400 flex-shrink-0"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
+                    </svg>{" "}
+                    {link.label} - {link.url}
+                  </p>
+                  <button
+                    onClick={() => handleRemoveLink(index)}
+                    className="btn-remove"
+                  >
                     Remove
                   </button>
                 </div>
@@ -470,7 +503,7 @@ function UpdateCurriculum() {
                 />
                 <button
                   onClick={() => handleRemoveSkill(index)}
-                  className="btbtn-remove"
+                  className="btn-remove"
                 >
                   Remove
                 </button>
@@ -519,11 +552,12 @@ function UpdateCurriculum() {
           </label>
           <div
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
-            style={{  height: "250px" }}
+            style={{ height: "250px" }}
           >
             <Editor
               editorState={projects}
               toolbarClassName="toolbarClassName"
+              toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onProjectsEditorStateChange}
@@ -558,6 +592,7 @@ function UpdateCurriculum() {
             <Editor
               editorState={experience}
               toolbarClassName="toolbarClassName"
+              toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onExperienceEditorStateChange}
@@ -592,6 +627,7 @@ function UpdateCurriculum() {
             <Editor
               editorState={education}
               toolbarClassName="toolbarClassName"
+              toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onEducationEditorStateChange}
@@ -667,18 +703,34 @@ function UpdateCurriculum() {
           )}
           <main className="flex gap-x-10 mt-10 m-3">
             <div className="w-2/6">
-              {(email || phone || address) && <strong className="text-xl font-medium">Contact Details</strong>}
+              {(email || phone || address) && (
+                <strong className="text-xl font-medium">Contact Details</strong>
+              )}
               <ul className="mt-2 mb-10 list-none">
-                    
-                    {email && <li className="px-1 mt-1 list-none"><strong className="mr-1">E-mail </strong>
-                        <a href="mailto:" className="block">{email}</a>
-                    </li>}
-                   {phone && <li className="px-1  list-none"><strong className="mr-1">Phone </strong>
-                        <a href="tel:+821023456789" className="block">{phone}</a>
-                    </li>}
-                    {address && <li className="px-1  list-none"><strong className="mr-1">Location</strong><span className="block">{address}</span></li>}
-                </ul>
-{/* 
+                {email && (
+                  <li className="px-1 mt-1 list-none">
+                    <strong className="mr-1">E-mail </strong>
+                    <a href="mailto:" className="block">
+                      {email}
+                    </a>
+                  </li>
+                )}
+                {phone && (
+                  <li className="px-1  list-none">
+                    <strong className="mr-1">Phone </strong>
+                    <a href="tel:+821023456789" className="block">
+                      {phone}
+                    </a>
+                  </li>
+                )}
+                {address && (
+                  <li className="px-1  list-none">
+                    <strong className="mr-1">Location</strong>
+                    <span className="block">{address}</span>
+                  </li>
+                )}
+              </ul>
+              {/* 
                 {links && 
                 <ul className="mt-2">
                 {links.map((link,index)=>{
@@ -688,88 +740,107 @@ function UpdateCurriculum() {
                 })}  
                 </ul>} */}
 
-                {skills.length>0 && 
+              {skills.length > 0 && (
                 <>
-                <strong className="text-xl font-medium mt-1">Skills</strong>
-                <ul className="mt-2 flex flex-wrap">
-                {skills.map((skill,index)=>{
-                  return(
-                    <li className="px-2 mt-1 list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded" key={index}>{skill}</li>
-                  )
-                })}  
-                </ul>
+                  <strong className="text-xl font-medium mt-1">Skills</strong>
+                  <ul className="mt-2 flex flex-wrap">
+                    {skills.map((skill, index) => {
+                      return (
+                        <li
+                          className="px-2 mt-1 list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded"
+                          key={index}
+                        >
+                          {skill}
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </>
-                }
+              )}
 
-                {languages.length>0 && 
+              {languages.length > 0 && (
                 <>
-                <strong className="text-xl font-medium mt-1">Languages</strong>
-                <ul className="mt-2 flex flex-col">
-                {languages.map((language,index)=>{
-                  return(
-                    <li className="px-2 mt-1 list-none text-s" key={index}>{language}</li>
-                  )
-                })}  
-                </ul>
+                  <strong className="text-xl font-medium mt-1">
+                    Languages
+                  </strong>
+                  <ul className="mt-2 flex flex-col">
+                    {languages.map((language, index) => {
+                      return (
+                        <li className="px-2 mt-1 list-none text-s" key={index}>
+                          {language}
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </>
-                }
+              )}
 
-                {
-              htmlContentEducation && 
+              {htmlContentEducation && (
                 <>
                   <h2 className="text-xl font-medium mt-1">Education</h2>
-                   
-                    <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentEducation }}></p>
-                
-                  
-                </>              
-            }
 
-            {awards.length>0 && 
-                <>
-                <strong className="text-xl font-medium mt-1">Awards & Achievements</strong>
-                <ul className="mt-2 flex flex-col">
-                {awards.map((award,index)=>{
-                  return(
-                    <li className="px-2 mt-1 list-none text-s" key={index}>{award}</li>
-                  )
-                })}  
-                </ul>
+                  <p
+                    className="mt-4 text-s flex flex-wrap flex-col"
+                    dangerouslySetInnerHTML={{ __html: htmlContentEducation }}
+                  ></p>
                 </>
-                }
+              )}
 
+              {awards.length > 0 && (
+                <>
+                  <strong className="text-xl font-medium mt-1">
+                    Awards & Achievements
+                  </strong>
+                  <ul className="mt-2 flex flex-col">
+                    {awards.map((award, index) => {
+                      return (
+                        <li className="px-2 mt-1 list-none text-s" key={index}>
+                          {award}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </>
+              )}
             </div>
-
 
             <div className="w-4/6">
-            {
-              htmlContentSummry && 
+              {htmlContentSummry && (
                 <>
-                  <h2 className="text-2xl pb-1 border-b font-semibold">Summary</h2>
-                  <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentSummry }}></p>
-                </>              
-            }
-            {
-              htmlContentProjects && 
+                  <h2 className="text-2xl pb-1 border-b font-semibold">
+                    Summary
+                  </h2>
+                  <p
+                    className="mt-4 text-s flex flex-wrap flex-col"
+                    dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
+                  ></p>
+                </>
+              )}
+              {htmlContentProjects && (
                 <>
-                  <h2 className="text-2xl pb-1 border-b font-semibold">Projects</h2>
-                  <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentProjects }}></p>
-                </>              
-            }
+                  <h2 className="text-2xl pb-1 border-b font-semibold">
+                    Projects
+                  </h2>
+                  <p
+                    className="mt-4 text-s flex flex-wrap flex-col"
+                    dangerouslySetInnerHTML={{ __html: htmlContentProjects }}
+                  ></p>
+                </>
+              )}
 
-            {
-              htmlContentExperience && 
+              {htmlContentExperience && (
                 <>
-                  <h2 className="text-2xl pb-1 border-b font-semibold">Work Experience</h2>
-                  <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentExperience }}></p>
-                </>              
-            }
-              
+                  <h2 className="text-2xl pb-1 border-b font-semibold">
+                    Work Experience
+                  </h2>
+                  <p
+                    className="mt-4 text-s flex flex-wrap flex-col"
+                    dangerouslySetInnerHTML={{ __html: htmlContentExperience }}
+                  ></p>
+                </>
+              )}
             </div>
           </main>
-
-      
-          
         </div>
       </div>
     </div>

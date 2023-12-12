@@ -1,15 +1,16 @@
 .content-home {
     padding-bottom: 70px; 
-    padding-left: 20px;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .titles-home {
-    @apply font-bold text-slate-800 text-4xl p-5
+    @apply font-bold text-slate-800 text-3xl p-5 md:text-4xl
     
 }
 
 .main-section-home {
-    @apply columns-2 justify-center flex items-center 
+    @apply  justify-center items-center md:columns-2 md:flex
 }
 
 .text-main-section {
@@ -26,7 +27,7 @@
 }
 
 .imgExample {
-    width: 40%;
-    
-    object-fit: fill
+    width: 50%;
+    object-fit: fill;
+    @apply align-middle items-center justify-center p-2.5 mt-3 md:mt-0 md:p-0
 }
