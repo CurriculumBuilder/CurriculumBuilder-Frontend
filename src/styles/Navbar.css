@@ -7,19 +7,20 @@
     width: 2.5rem;
 }
 
-.profile-icon-container {
+
+.profile-dropdown-container {
     position: relative;
     cursor: pointer;
+    right: 0;
+    margin: 0;
   }
   
   .dropdown-menu {
     position: absolute;
     top: 100%;
-    right: 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    z-index: 1;
-    @apply bg-slate-800 
+    box-shadow:  rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    @apply bg-slate-800 block -right-8 w-40 rounded-md text-center
   }
   
   .dropdown-menu ul {
@@ -37,6 +38,6 @@
   }
   
   .dropdown-menu li:hover {
-    @apply hover:bg-slate-200 text-slate-800 rounded-md
+    @apply hover:bg-slate-200 text-slate-800 rounded-md 
   }
   

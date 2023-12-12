@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import Modal from 'react-modal';
 import "../styles/AllCurriculums.css"
 Modal.setAppElement("#root");
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function AllCurriculumsPage() {
     const storedToken = localStorage.getItem("authToken");
@@ -41,14 +44,35 @@ function AllCurriculumsPage() {
             axios
               .delete(`${API_URL}/api/curriculums/${curriculumToDeleteId}`, { headers: { Authorization: `Bearer ${storedToken}`} })
               .then(() => {
+                toast.success('Deleted Successfuly!', {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  
+                });
+                closeModal();
                 setCurriculums((prevCurriculums) =>
                   prevCurriculums.filter((c) => c._id !== curriculumToDeleteId)
                 );
-                closeModal();
+                
               })
               .catch((error) => {
-                console.error(error);
                 closeModal();
+                toast.error('Deletion Failed!', {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                });
+                console.error(error);
+                
               });
           }
       
@@ -72,12 +96,12 @@ function AllCurriculumsPage() {
               >
                 Delete
               </button>
-
+              
             </div>
           </div>
         ))}
       </section>
-
+      
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -90,6 +114,8 @@ function AllCurriculumsPage() {
           <button className='modal-delete-no-btn' onClick={closeModal}>No</button>
         </div>
       </Modal>
+
+      <ToastContainer />
     </>
   )
 }

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "../context/auth.context";
 import profile from "../assets/profile.png";
 import "../styles/Navbar.css";
@@ -9,16 +9,21 @@ import { useDropdown } from '../context/DropdownContext';
 function Navbar() {
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
-  const {isDropdownOpen, setDropdownOpen} = useDropdown();
-  console.log('isDropdownOpen:', isDropdownOpen);
- 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
+  const { isDropdownOpen, setDropdownOpen } = useDropdown();
+
+  const dropdownContainerRef = useRef(null);
+
+  const openDropdown = () => {
+    setDropdownOpen(true);
+  };
+
+  const closeDropdown = () => {
+    setDropdownOpen(false);
   };
 
   const handleLogout = () => {
     logOutUser();
-    setDropdownOpen(false); 
+    setDropdownOpen(false);
   };
 
   return (
@@ -32,18 +37,29 @@ function Navbar() {
       {!isLoggedIn && <Link to={"/signup"}>SignUp</Link>}
 
       {isLoggedIn && (
-        <div className="profile-icon-container" onClick={toggleDropdown}>
-          <img src={profile} className="profile-icon" />
-        </div>
-      )}
+        <div
+          className="profile-dropdown-container"
+          ref={dropdownContainerRef}
+          onMouseEnter={openDropdown}
+          onMouseLeave={closeDropdown}
+        >
+          <div className="profile-icon-container">
+            <img src={profile} className="profile-icon" alt="Profile" />
+          </div>
 
-      {isDropdownOpen && isLoggedIn && (
-        <div className="dropdown-menu"  >
-          <ul>
-          <Link to={"/curriculum"}><li>Create New CV</li></Link>
-            <Link to={"/my-curriculums"}><li>My Curriculums</li></Link>
-            {logOutUser && <li onClick={handleLogout}>Logout</li>}
-          </ul>
+          {isDropdownOpen && (
+            <div className="dropdown-menu">
+              <ul>
+                <Link to={"/curriculum"}>
+                  <li>Create New CV</li>
+                </Link>
+                <Link to={"/my-curriculums"}>
+                  <li>My Curriculums</li>
+                </Link>
+                {logOutUser && <li onClick={handleLogout}>Logout</li>}
+              </ul>
+            </div>
+          )}
         </div>
       )}
     </nav>
