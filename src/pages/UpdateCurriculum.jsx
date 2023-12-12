@@ -8,10 +8,9 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../styles/Curriculum.css";
 import DOMPurify from "dompurify";
 import axios from "axios";
-import { htmlToDraft } from "html-to-draftjs";
-import {stateToHTML} from "draft-js-export-html";
-import {stateFromHTML} from "draft-js-import-html";
 import { useParams } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function UpdateCurriculum() {
   const { user } = useContext(AuthContext);
@@ -203,10 +202,27 @@ function UpdateCurriculum() {
             setSkillsValues(res.skills)
             setLanguageValues(res.languages)
             setAwardsValues(res.awards)
+
             setHtmlContentSummry(res.personalData.summary)
-            const contentBlock = convertFromHTML(res.personalData.summary);
-            const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-            setSummry(EditorState.createWithContent(contentState));
+            const contentBlockSummary = convertFromHTML(res.personalData.summary);
+            const contentStateSummary = ContentState.createFromBlockArray(contentBlockSummary.contentBlocks);
+            setSummry(EditorState.createWithContent(contentStateSummary));
+
+            setHtmlContentProjects(res.projects)
+            const contentBlockProjects = convertFromHTML(res.projects);
+            const contentStateProjects  = ContentState.createFromBlockArray(contentBlockProjects.contentBlocks);
+            setProjects(EditorState.createWithContent(contentStateProjects));
+
+            setHtmlContentExperience(res.experience)
+            const contentBlockExperience = convertFromHTML(res.experience);
+            const contentStateExperience  = ContentState.createFromBlockArray(contentBlockExperience.contentBlocks);
+            setExperience(EditorState.createWithContent(contentStateExperience));
+
+            setHtmlContentEducation(res.education)
+            const contentBlockEducation = convertFromHTML(res.education);
+            const contentStateEducation  = ContentState.createFromBlockArray(contentBlockEducation.contentBlocks);
+            setEducation(EditorState.createWithContent(contentStateEducation));
+
         })
         .catch((error) => {
             console.log("Error getting project details from the API...");
@@ -239,13 +255,31 @@ function UpdateCurriculum() {
 
     if (storedToken) {
       axios
-        .post(`${API_URL}/curriculums`, requestBody, {
+        .put(`${API_URL}/curriculums/${curriculumId}`, requestBody, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then((response) => {
+          toast.success('Updated Successfully!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
           console.log(response.data);
         })
         .catch((error) => {
+          toast.error('Update Failed!', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
           console.log("Error creating CV from the API...");
           console.log(error);
         });
@@ -272,12 +306,7 @@ function UpdateCurriculum() {
                 type="text"
                 placeholder="Jane Doe"
                 value={name}
-                onChange={(e) => {
-                  const updatedEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(e.target.value)
-                  );
-                  onNameStateChange(updatedEditorState);
-                }}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="w-full md:w-1/2 px-3">
@@ -293,13 +322,7 @@ function UpdateCurriculum() {
                 type="text"
                 placeholder="janedoe@example.com"
                 value={email}
-                onChange={(e) => {
-                  const updatedEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(e.target.value)
-                  );
-                  onEmailStateChange(updatedEditorState);
-                  setEmail(e.target.value);
-                }}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="w-full  px-3 mb-6 md:mb-0">
@@ -315,12 +338,7 @@ function UpdateCurriculum() {
                   type="text"
                   placeholder="Front End Developer"
                   value={position}
-                  onChange={(e) => {
-                    const updatedEditorState = EditorState.createWithContent(
-                      ContentState.createFromText(e.target.value)
-                    );
-                    onPositionStateChange(updatedEditorState);
-                  }}
+                  onChange={(e) => setPosition(e.target.value)}
                 />
               </div>
           </div>
@@ -338,12 +356,7 @@ function UpdateCurriculum() {
                 type="text"
                 placeholder="01-123-4567-8910"
                 value={phone}
-                onChange={(e) => {
-                  const updatedEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(e.target.value)
-                  );
-                  onPhoneStateChange(updatedEditorState);
-                }}
+                onChange={(e) => setPhone(e.target.value)}
               />
             </div>
             <div className="w-full md:w-1/2 px-3">
@@ -359,12 +372,7 @@ function UpdateCurriculum() {
                 type="text"
                 placeholder="Berlin, Germany"
                 value={address}
-                onChange={(e) => {
-                  const updatedEditorState = EditorState.createWithContent(
-                    ContentState.createFromText(e.target.value)
-                  );
-                  onAddressStateChange(updatedEditorState);
-                }}
+                onChange={(e) => setAddress(e.target.value)}
               />
               
             </div>
@@ -380,8 +388,7 @@ function UpdateCurriculum() {
             style={{  height: "250px" }}
           >
             <Editor
-             editorState={summry}
-              
+             editorState={summry}    
               toolbarClassName="toolbarClassName"
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
@@ -615,6 +622,7 @@ function UpdateCurriculum() {
           <button type="submit" className="btn-save-CV">
             Save CV
           </button>
+          <ToastContainer />
         </form>
       </div>
 
@@ -694,7 +702,7 @@ function UpdateCurriculum() {
               htmlContentEducation && 
                 <>
                   <h2 className="text-xl font-medium mt-1">Education</h2>
-                    {htmlContentEducation}
+                   
                     <p className="mt-4 text-s flex flex-wrap flex-col"  dangerouslySetInnerHTML={{ __html: htmlContentEducation }}></p>
                 
                   

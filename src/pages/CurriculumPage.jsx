@@ -199,7 +199,6 @@ function CurriculumPage() {
     const text = contentState.getPlainText();
     const rawContent = convertToRaw(contentState);
     const markup = draftToHtml(rawContent);
-
     setHtmlContentSkills(markup);
     setSkillsValues(text);
   };
