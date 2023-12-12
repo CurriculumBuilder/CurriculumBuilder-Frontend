@@ -48,7 +48,7 @@ function UpdateCurriculum() {
   const storedToken = localStorage.getItem("authToken");
   const componentRef = useRef();
 
-  const API_URL = "http://localhost:5005/api";
+  const API_URL = import.meta.env.VITE_API_URL
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -199,7 +199,7 @@ function UpdateCurriculum() {
 
   useEffect(() => {
     // GET /curriculums/:curriculumId
-    axios.get(`${API_URL}/curriculums/${curriculumId}`,{
+    axios.get(`${API_URL}/api/curriculums/${curriculumId}`,{
         headers: { Authorization: `Bearer ${storedToken}` },
       })
         .then(response => {
@@ -266,7 +266,7 @@ function UpdateCurriculum() {
 
     if (storedToken) {
       axios
-        .put(`${API_URL}/curriculums/${curriculumId}`, requestBody, {
+        .put(`${API_URL}/api/curriculums/${curriculumId}`, requestBody, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then((response) => {

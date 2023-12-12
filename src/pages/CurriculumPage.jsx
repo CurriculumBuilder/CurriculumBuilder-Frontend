@@ -44,7 +44,7 @@ function CurriculumPage() {
 
   const componentRef = useRef();
 
-  const API_URL = "http://localhost:5005/api";
+  const API_URL = import.meta.env.VITE_API_URL
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -215,7 +215,7 @@ function CurriculumPage() {
 
     if (storedToken) {
       axios
-        .post(`${API_URL}/curriculums`, requestBody, {
+        .post(`${API_URL}/api/curriculums`, requestBody, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then((response) => {

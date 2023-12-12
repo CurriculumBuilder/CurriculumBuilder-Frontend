@@ -8,7 +8,7 @@ Modal.setAppElement("#root");
 
 function AllCurriculumsPage() {
     const storedToken = localStorage.getItem("authToken");
-    const API_URL = "http://localhost:5005/api";
+    const API_URL = import.meta.env.VITE_API_URL
     const [curriculums, setCurriculums] = useState([]);
     const [curriculumToDelete, setCurriculumToDelete] = useState([]);
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -19,7 +19,7 @@ function AllCurriculumsPage() {
 
         if(storedToken){
         axios
-          .get(`${API_URL}/curriculums`, { headers: { Authorization: `Bearer ${storedToken}`} })
+          .get(`${API_URL}/api/curriculums`, { headers: { Authorization: `Bearer ${storedToken}`} })
           .then((response) => {
             setCurriculums(response.data);
           })
@@ -39,7 +39,7 @@ function AllCurriculumsPage() {
 
       const deleteCurriculum = () => {
             axios
-              .delete(`${API_URL}/curriculums/${curriculumToDeleteId}`, { headers: { Authorization: `Bearer ${storedToken}`} })
+              .delete(`${API_URL}/api/curriculums/${curriculumToDeleteId}`, { headers: { Authorization: `Bearer ${storedToken}`} })
               .then(() => {
                 setCurriculums((prevCurriculums) =>
                   prevCurriculums.filter((c) => c._id !== curriculumToDeleteId)
