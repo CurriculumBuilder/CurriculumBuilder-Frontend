@@ -3,5 +3,5 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    @apply  mt-auto bg-slate-800 text-white p-4 h-auto flex justify-between 
+    @apply  mt-auto bg-slate-500 text-white p-4 h-auto flex justify-between 
 }

@@ -27,7 +27,6 @@
 }
 
 .imgExample {
-    width: 50%;
     object-fit: fill;
-    @apply align-middle items-center justify-center p-2.5 mt-3 md:mt-0 md:p-0
+    @apply align-middle items-center justify-center p-2.5 mt-3 md:mt-0 md:p-0 w-2/3 md:w-1/2
 }

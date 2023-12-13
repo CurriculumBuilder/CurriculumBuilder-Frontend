@@ -49,8 +49,8 @@ function HomePage() {
       <HashLink to="/#about-us">
         <section id="about-us">
           <div>
-            <h1 className="titles-home">Section Two: About Us</h1>
-            <p>
+            <h1 className="titles-home">About Us</h1>
+            <p className="p-main-section">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
               ullamcorper magna malesuada metus hendrerit gravida. In congue
               tincidunt augue, nec bibendum nisl vehicula lacinia. Duis mollis,
@@ -68,8 +68,8 @@ function HomePage() {
       <HashLink to="/#contact">
         <section id="contact">
           <div>
-            <h1 className="titles-home">Section Three: Contact</h1>
-            <p>
+            <h1 className="titles-home">Contact</h1>
+            <p className="p-main-section">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
               ullamcorper magna malesuada metus hendrerit gravida. In congue
               tincidunt augue, nec bibendum nisl vehicula lacinia. Duis mollis,
@@ -87,8 +87,8 @@ function HomePage() {
       <HashLink to="/#faq">
         <section id="faq">
           <div>
-            <h1 className="titles-home">Section Four: FAQ</h1>
-            <p>
+            <h1 className="titles-home">FAQ</h1>
+            <p className="p-main-section">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
               ullamcorper magna malesuada metus hendrerit gravida. In congue
               tincidunt augue, nec bibendum nisl vehicula lacinia. Duis mollis,
