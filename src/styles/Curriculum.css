@@ -16,7 +16,7 @@
 }
 .preview-pdf{
     align-self: center;
-    height: 56rem;
+    height: 55rem;
     width: 40rem;
     margin: 0 auto;
     @apply bg-white  
