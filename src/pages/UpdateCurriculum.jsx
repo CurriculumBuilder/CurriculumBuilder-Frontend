@@ -640,6 +640,7 @@ function UpdateCurriculum() {
               editorClassName="editorClassName"
               onEditorStateChange={onExperienceEditorStateChange}
               onContentStateChange={onContentStateChange}
+              handlePastedText={() => false}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
                 experience.getCurrentContent().getPlainText("").length >=
