@@ -57,7 +57,7 @@ function UpdateCurriculum() {
     content: () => componentRef.current,
   });
 
-  const maxCharSummary = 100;
+  const maxCharSummary = 200;
   const maxCharProjects = 1000;
   const maxCharExperience = 1000;
   const maxCharEducation = 1000;
