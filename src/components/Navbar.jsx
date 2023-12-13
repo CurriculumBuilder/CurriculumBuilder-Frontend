@@ -27,6 +27,7 @@ function Navbar() {
   };
 
   return (
+    <div className="container-navbar">
     <nav className="navbar">
       <Link to={"/"}>Logo</Link>
       <HashLink to={"/#about-us"}>About Us</HashLink>
@@ -63,6 +64,7 @@ function Navbar() {
         </div>
       )}
     </nav>
+    </div>
   );
 }
 
