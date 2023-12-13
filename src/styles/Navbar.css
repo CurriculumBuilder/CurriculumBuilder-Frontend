@@ -1,6 +1,11 @@
+.container-navbar{
+  z-index: 1000;
+  @apply sticky top-0 
+}
+
 
 .navbar {
-    @apply px-2 sm:px-6 lg:px-8 relative flex h-16 items-center justify-between bg-slate-800 text-white
+  @apply px-2 sm:px-6 lg:px-8 flex h-16 items-center justify-between bg-slate-800 text-white relative
 }
 
 .profile-icon {

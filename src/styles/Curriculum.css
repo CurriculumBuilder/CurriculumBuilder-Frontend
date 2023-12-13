@@ -11,6 +11,7 @@
     overflow-y: auto;
     @apply w-1/2 p-8 
 }
+
 .preview-menu{
     @apply flex flex-row-reverse p-4 
 }
@@ -22,6 +23,31 @@
     @apply bg-white  
 }
 
+
+@media (max-width: 768px) {
+    .main-container {
+        @apply flex-col h-auto; 
+    }
+
+    .preview-container {
+        @apply w-full 
+    }
+
+    .form-container {
+        @apply w-full; 
+    }
+
+    .preview-menu{
+        @apply flex flex-row-reverse p-4 
+    }
+    .preview-pdf{
+        align-self: center;
+        height: 55rem;
+        width: 28rem;
+        margin: 0 auto;
+        @apply bg-white  
+    }
+}
 
   @page {
     size: 7in 9.25in;
