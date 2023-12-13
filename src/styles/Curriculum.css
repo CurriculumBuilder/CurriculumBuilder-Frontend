@@ -53,3 +53,7 @@
     vertical-align: middle; 
     text-align: center;
 }
+
+.alink a{
+    @apply text-blue-800 underline
+}

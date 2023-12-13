@@ -8,7 +8,6 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "../styles/Curriculum.css";
 import DOMPurify from "dompurify";
 import axios from "axios";
-import { htmlToDraft } from "html-to-draftjs";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -772,9 +771,11 @@ function CurriculumPage() {
           <main className="flex gap-x-10 mt-10 m-3">
             <div className="w-2/6">
               {(email || phone || address) && (
+                
                 <strong className="text-xl font-medium">Contact Details</strong>
+                
               )}
-              <ul className="mt-2 mb-10 list-none">
+              <ul className="mt-2 mb-3">
                     
                     {email && <li className="px-1 mt-1 list-none"><strong className="mr-1">E-mail </strong>
                         <a href="mailto:" className="block">{email}</a>
@@ -789,11 +790,12 @@ function CurriculumPage() {
               {skills.length > 0 && (
                 <>
                   <strong className="text-xl font-medium mt-1">Skills</strong>
-                  <ul className="mt-2 flex flex-wrap">
+                  
+                  <ul className="mt-2 mb-3 flex flex-wrap">
                     {skills.map((skill, index) => {
                       return (
                         <li
-                          className="px-2 mt-1 list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded"
+                          className="px-2  list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded"
                           key={index}
                         >
                           {skill}
@@ -806,13 +808,14 @@ function CurriculumPage() {
 
               {languages.length > 0 && (
                 <>
-                  <strong className="text-xl font-medium mt-1">
+                  <strong className="text-xl font-medium mt-1 ">
                     Languages
                   </strong>
-                  <ul className="mt-2 flex flex-col">
+                 
+                  <ul className="mt-2 mb-3 flex flex-col">
                     {languages.map((language, index) => {
                       return (
-                        <li className="px-2 mt-1 list-none text-s" key={index}>
+                        <li className="px-2 list-none text-s" key={index}>
                           {language}
                         </li>
                       );
@@ -824,9 +827,9 @@ function CurriculumPage() {
               {htmlContentEducation && (
                 <>
                   <h2 className="text-xl font-medium mt-1">Education</h2>
-
+                  
                   <p
-                    className="mt-4 text-s flex flex-wrap flex-col"
+                    className="mt-4 text-s flex flex-wrap flex-col alink"
                     dangerouslySetInnerHTML={{ __html: htmlContentEducation }}
                   ></p>
                 </>
@@ -834,10 +837,10 @@ function CurriculumPage() {
 
               {awards.length > 0 && (
                 <>
-                  <strong className="text-xl font-medium mt-1">
+                  <strong className="text-xl font-medium mt-4">
                     Awards & Achievements
                   </strong>
-                  <ul className="mt-2 flex flex-col">
+                  <ul className="mt-2 mb-3 flex flex-col">
                     {awards.map((award, index) => {
                       return (
                         <li className="px-2 mt-1 list-none text-s" key={index}>
@@ -853,22 +856,22 @@ function CurriculumPage() {
             <div className="w-4/6">
               {htmlContentSummry && (
                 <>
-                  <h2 className="text-2xl pb-1 border-b font-semibold">
+                  <h2 className="text-xl font-semibold mt-1 pb-1 border-b-4 ">
                     Summary
                   </h2>
                   <p
-                    className="mt-4 text-s flex flex-wrap flex-col"
+                    className="mt-4 text-s flex flex-wrap flex-col alink"
                     dangerouslySetInnerHTML={{ __html: htmlContentSummry }}
                   ></p>
                 </>
               )}
               {htmlContentProjects && (
                 <>
-                  <h2 className="text-2xl pb-1 border-b font-semibold">
+                  <h2 className="text-xl font-semibold mt-2 pb-1 border-b-4 ">
                     Projects
                   </h2>
                   <p
-                    className="mt-4 text-s flex flex-wrap flex-col"
+                    className="mt-4 text-s flex flex-wrap flex-col alink"
                     dangerouslySetInnerHTML={{ __html: htmlContentProjects }}
                   ></p>
                 </>
@@ -876,11 +879,11 @@ function CurriculumPage() {
 
               {htmlContentExperience && (
                 <>
-                  <h2 className="text-2xl pb-1 border-b font-semibold">
+                  <h2 className="text-xl font-semibold mt-2 pb-1 border-b-4 ">
                     Work Experience
                   </h2>
                   <p
-                    className="mt-4 text-s flex flex-wrap flex-col"
+                    className="mt-4 text-s flex flex-wrap flex-col alink"
                     dangerouslySetInnerHTML={{ __html: htmlContentExperience }}
                   ></p>
                 </>
