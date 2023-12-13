@@ -457,6 +457,7 @@ function UpdateCurriculum() {
               toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
+              handlePastedText={() => false}
               onEditorStateChange={onEditorStateChange}
               onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
@@ -601,6 +602,7 @@ function UpdateCurriculum() {
               toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
+              handlePastedText={() => false}
               onEditorStateChange={onProjectsEditorStateChange}
               onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
@@ -671,6 +673,7 @@ function UpdateCurriculum() {
               toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
+              handlePastedText={() => false}
               onEditorStateChange={onEducationEditorStateChange}
               onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
