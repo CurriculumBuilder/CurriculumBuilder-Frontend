@@ -48,6 +48,7 @@ function UpdateCurriculum() {
 
   const [awards, setAwardsValues] = useState([]);
 
+  const [isThemeChange, setIsThemeChange] = useState(false);
   const storedToken = localStorage.getItem("authToken");
   const componentRef = useRef();
 
@@ -189,6 +190,11 @@ function UpdateCurriculum() {
     awardsCopy.splice(index, 1);
     setAwardsValues(awardsCopy);
   };
+
+  const handleTheme = (e) =>{
+    e.preventDefault();
+    setIsThemeChange(!isThemeChange);
+  }
 
   useEffect(() => {
     // GET /curriculums/:curriculumId
@@ -731,6 +737,12 @@ function UpdateCurriculum() {
           >
             Download CV
           </button>
+          <button
+            onClick={handleTheme}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded pl-8 mr-2"
+          >
+          Change Theme
+          </button>
         </div>
         <div className="preview-pdf relative" ref={componentRef}>
  
@@ -826,7 +838,7 @@ function UpdateCurriculum() {
           {name && (
             <div className="flex justify-between items-center m-3">
               <div>
-                <div className="bg-gray-300 font-bold text-white text-7xl rounded-full h-32 w-32 char-card">
+                <div className={`font-bold text-white text-7xl rounded-full h-32 w-32 char-card ${isThemeChange ? 'bg-blue-300':'bg-gray-300'} `}>
                   <p>{name[0].toUpperCase()}</p>
                 </div>
               </div>
@@ -862,7 +874,7 @@ function UpdateCurriculum() {
                     {skills.map((skill, index) => {
                       return (
                         <li
-                          className="px-2 mt-1 list-none bg-gray-600 text-white py-1 ml-1 text-xs rounded"
+                          className={`px-2 mt-1 list-none  text-white py-1 ml-1 text-xs rounded ${isThemeChange ? 'bg-blue-900' : 'bg-gray-600'} `}
                           key={index}
                         >
                           {skill}
@@ -923,7 +935,7 @@ function UpdateCurriculum() {
             <div className="w-4/6">
               {htmlContentSummry && (
                 <>
-                  <h2 className="text-lg font-semibold mt-1 pb-1 border-b-4 ">
+                  <h2 className={`text-lg font-semibold mt-1 pb-1 ${isThemeChange ? 'border-b-4 border-blue-300' : 'border-b-4'} border-b-4`}>
                     Summary
                   </h2>
                   <p
@@ -934,7 +946,7 @@ function UpdateCurriculum() {
               )}
               {htmlContentProjects && (
                 <>
-                  <h2 className="text-lg font-semibold mt-2 pb-1 border-b-4 ">
+                  <h2 className={`text-lg font-semibold mt-1 pb-1 ${isThemeChange ? 'border-b-4 border-blue-300' : 'border-b-4'} border-b-4`}>
                     Projects
                   </h2>
                   <p
@@ -946,7 +958,7 @@ function UpdateCurriculum() {
 
               {htmlContentExperience && (
                 <>
-                  <h2 className="text-lg font-semibold mt-2 pb-1 border-b-4 ">
+                  <h2 className={`text-lg font-semibold mt-1 pb-1 ${isThemeChange ? 'border-b-4 border-blue-300' : 'border-b-4'} border-b-4`}>
                     Work Experience
                   </h2>
                   <p
