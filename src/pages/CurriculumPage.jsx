@@ -52,7 +52,7 @@ function CurriculumPage() {
     content: () => componentRef.current,
   });
 
-  const maxCharSummary = 100;
+  const maxCharSummary = 200;
   const maxCharProjects = 1000;
   const maxCharExperience = 1000;
   const maxCharEducation = 1000;
@@ -395,6 +395,7 @@ function CurriculumPage() {
               editorClassName="editorClassName"
               onEditorStateChange={onEditorStateChange}
               onContentStateChange={onContentStateChange}
+              handlePastedText={() => false}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
                 summry.getCurrentContent().getPlainText("").length >=
@@ -537,6 +538,7 @@ function CurriculumPage() {
               toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
+              handlePastedText={() => false}
               onEditorStateChange={onProjectsEditorStateChange}
               onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
@@ -572,6 +574,7 @@ function CurriculumPage() {
               toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
+              handlePastedText={() => false}
               onEditorStateChange={onExperienceEditorStateChange}
               onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
@@ -608,6 +611,7 @@ function CurriculumPage() {
               toolbar={toolbarOptions}
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
+              handlePastedText={() => false}
               onEditorStateChange={onEducationEditorStateChange}
               onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
