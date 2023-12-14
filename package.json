@@ -17,6 +17,7 @@
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
     "draftjs-to-html": "^0.9.1",
+    "emailjs-com": "^3.2.0",
     "framer-motion": "^10.16.16",
     "hamburger-react": "^2.5.0",
     "html-to-draftjs": "^1.5.0",

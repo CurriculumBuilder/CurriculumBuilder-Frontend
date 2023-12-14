@@ -270,9 +270,22 @@ function UpdateCurriculum() {
       awards: awards,
     };
 
+    if(name.length <= 0 && email.length <= 0 && phone.length <= 0 && address.length <= 0 && position.length <= 0)
+    {
+      toast.error('Name, Email, Phone, Address & Position are Required!', {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
     if (htmlContentSummry.length <= 8) {
       toast.error("Summary Required!", {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -284,7 +297,7 @@ function UpdateCurriculum() {
 
     if (skills.length <= 0) {
       toast.error("Skills Required!", {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -296,7 +309,7 @@ function UpdateCurriculum() {
 
     if (languages.length <= 0) {
       toast.error("Language Required!", {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -305,13 +318,26 @@ function UpdateCurriculum() {
         progress: undefined,
       });
     }
-
-    if (storedToken && skills.length > 0 && languages.length > 0 && htmlContentSummry.length >= 10) {
+    if(htmlContentEducation.length <= 8)
+    {
+      toast.error('Education Required!', {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+console.log(htmlContentEducation.length)
+    if (storedToken && name.length > 0 && email.length > 0 && phone.length > 0 && address.length > 0 && position.length > 0 && skills.length > 0 && languages.length > 0 && htmlContentSummry.length > 8 && htmlContentEducation.length > 8) {
       axios
         .put(`${API_URL}/api/curriculums/${curriculumId}`, requestBody, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then((response) => {
+          console.log(response.data);
           toast.success("Updated Successfully!", {
             position: "top-right",
             autoClose: 3000,
@@ -320,8 +346,8 @@ function UpdateCurriculum() {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-          });
-          console.log(response.data);
+          });     
+          handlePrint();
         })
         .catch((error) => {
           toast.error("Update Failed!", {
@@ -357,7 +383,7 @@ function UpdateCurriculum() {
       <div className="form-container">
         <h2 className="block tracking-wide text-gray-500 text-1xs font-bold mb-2">Personal Details</h2>
         <hr className="w-96 m-3" />
-        <form className="w-full max-w-2xl" onSubmit={handleSubmit}>
+        <form className="w-full max-w-2xl">
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
@@ -721,27 +747,29 @@ function UpdateCurriculum() {
               Add Award{" "}
             </button>
           </div>
-
-          <button type="submit" className="btn-save-CV">
-            Update CV
-          </button>
           <ToastContainer />
         </form>
       </div>
 
       <div className="preview-container">
         <div className="preview-menu">
-          <button
-            onClick={handlePrint}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded pl-8 "
+        <button
+            onClick={handleSubmit}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex flex-row items-center align-middle"
           >
-            Download CV
+          <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512" className="mr-2">
+            <path fill="#fafafa" d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
+          </svg>
+            Update & Download
           </button>
           <button
             onClick={handleTheme}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded pl-8 mr-2"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 flex flex-row items-center align-middle"
           >
-          Change Theme
+          <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" className="mr-2">
+            <path fill="#ffffff" d="M512 256c0 .9 0 1.8 0 2.7c-.4 36.5-33.6 61.3-70.1 61.3H344c-26.5 0-48 21.5-48 48c0 3.4 .4 6.7 1 9.9c2.1 10.2 6.5 20 10.8 29.9c6.1 13.8 12.1 27.5 12.1 42c0 31.8-21.6 60.7-53.4 62c-3.5 .1-7 .2-10.6 .2C114.6 512 0 397.4 0 256S114.6 0 256 0S512 114.6 512 256zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm0-96a32 32 0 1 0 0-64 32 32 0 1 0 0 64zM288 96a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm96 96a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/>
+          </svg>
+           Change Theme
           </button>
         </div>
         <div className="preview-pdf relative" ref={componentRef}>

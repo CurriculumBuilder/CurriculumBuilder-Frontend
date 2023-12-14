@@ -10,6 +10,7 @@ import DOMPurify from "dompurify";
 import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import emailjs from "emailjs-com";
 
 
 function CurriculumPage() {
@@ -179,6 +180,24 @@ function CurriculumPage() {
     setAwardsValues(awardsCopy);
   };
 
+  const handleSendEmail = (e,name,email) => {
+    e.preventDefault()
+    try {
+      const serviceID = 'service_fmr5w4n';
+      const templateID = 'template_64albol';
+      const userID = 'G3cflObiRUq16nbre'; // obtained from EmailJS
+
+       emailjs.send(serviceID, templateID, {
+        to_email: email,
+        to_name: name 
+      }, userID);
+
+      console.log('Email sent successfully!');
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  };
+
   const handleSubmit = (event) => {
     const storedToken = localStorage.getItem("authToken");
     event.preventDefault();
@@ -202,11 +221,11 @@ function CurriculumPage() {
       education: htmlContentEducation,
       awards: awards,
     };
-
-    if(htmlContentSummry.length <= 8)
+ 
+    if(name.length <= 0 && email.length <= 0 && phone.length <= 0 && address.length <= 0 && position.length <= 0)
     {
-      toast.error('Summary Required!', {
-        position: "top-center",
+      toast.error('Name, Email, Phone, Address & Position are Required!', {
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -215,11 +234,22 @@ function CurriculumPage() {
         progress: undefined,
       });
     }
-
+    if(htmlContentSummry.length <= 8)
+    {
+      toast.error('Summary Required!', {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
     if(skills.length <= 0)
     {
       toast.error('Skills Required!', {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -232,7 +262,19 @@ function CurriculumPage() {
     if(languages.length <= 0)
     {
       toast.error('Language Required!', {
-        position: "top-center",
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    if(htmlContentEducation.length <= 8)
+    {
+      toast.error('Education Required!', {
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -242,9 +284,8 @@ function CurriculumPage() {
       });
     }
 
-
       
-        if (storedToken && skills.length > 0 && languages.length > 0 && htmlContentSummry.length >= 8) {
+        if (storedToken && name.length > 0 && email.length > 0 && phone.length > 0 && address.length > 0 && position.length > 0 && skills.length > 0 && languages.length > 0 && htmlContentSummry.length >= 8 && htmlContentEducation.length >= 8) {
           axios
             .post(`${API_URL}/api/curriculums`, requestBody, {
               headers: { Authorization: `Bearer ${storedToken}` },
@@ -260,6 +301,9 @@ function CurriculumPage() {
                 draggable: true,
                 progress: undefined,
               });
+              handleSendEmail(event,name,email);
+              handlePrint();
+             
             })
             .catch((error) => {
               console.log("Error creating CV from the API...");
@@ -292,7 +336,7 @@ function CurriculumPage() {
       <div className="form-container">
         <h2 className="block tracking-wide text-gray-500 text-1xs font-bold mb-2">Personal Details</h2>
         <hr className="w-96 m-3" />
-        <form className="w-full max-w-2xl" onSubmit={handleSubmit}>
+        <form className="w-full max-w-2xl" >
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
@@ -658,9 +702,6 @@ function CurriculumPage() {
             </button>
           </div>
           <ToastContainer />
-          <button type="submit" className="btn-save-CV">
-            Save CV
-          </button>
         </form>
       </div>
 
@@ -668,16 +709,22 @@ function CurriculumPage() {
         <div className="preview-menu">
 
           <button
-            onClick={handlePrint}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded pl-8 "
+            onClick={handleSubmit}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex flex-row items-center align-middle"
           >
-            Download CV
+          <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" className="mr-2">
+            <path fill="#ffffff" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>
+          </svg>
+            Save & Download CV
           </button>
           <button
             onClick={handleTheme}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded pl-8 mr-2"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 flex flex-row items-center align-middle"
           >
-          Change Theme
+          <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" className="mr-2">
+            <path fill="#ffffff" d="M512 256c0 .9 0 1.8 0 2.7c-.4 36.5-33.6 61.3-70.1 61.3H344c-26.5 0-48 21.5-48 48c0 3.4 .4 6.7 1 9.9c2.1 10.2 6.5 20 10.8 29.9c6.1 13.8 12.1 27.5 12.1 42c0 31.8-21.6 60.7-53.4 62c-3.5 .1-7 .2-10.6 .2C114.6 512 0 397.4 0 256S114.6 0 256 0S512 114.6 512 256zM128 288a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm0-96a32 32 0 1 0 0-64 32 32 0 1 0 0 64zM288 96a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm96 96a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/>
+          </svg>
+           Change Theme
           </button>
         </div>
         <div className="preview-pdf relative" ref={componentRef}>
