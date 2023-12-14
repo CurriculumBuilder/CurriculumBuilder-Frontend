@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/SignUpPage.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -27,11 +29,22 @@ function SignupPage(props) {
       .catch((error) => {
         const errorDescription = error.response.data.message;
         setErrorMessage(errorDescription);
+
+        toast.warn(errorDescription, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
   };
 
   return (
     <div className="SignupPage">
+     <ToastContainer/>
       <h1 className="title-sign-up">Sign Up</h1>
       <br />
       <form onSubmit={handleSignupSubmit} className="form-sign-up">
@@ -59,9 +72,10 @@ function SignupPage(props) {
       </form>
     <br />
     <br />
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+    
       <p className="p-sign-up">Already have account?</p>
       <br />
+     
       <button className="btn-login-sign-up"><Link to={"/login"}> Login</Link></button>
     </div>
   );

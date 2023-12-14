@@ -355,7 +355,7 @@ function UpdateCurriculum() {
   return (
     <div className="main-container">
       <div className="form-container">
-        <h2 className="text-2xl text-gray-900">Personal Details</h2>
+        <h2 className="block tracking-wide text-gray-500 text-1xs font-bold mb-2">Personal Details</h2>
         <hr className="w-96 m-3" />
         <form className="w-full max-w-2xl" onSubmit={handleSubmit}>
           <div className="flex flex-wrap -mx-3 mb-6">

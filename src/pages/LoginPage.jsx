@@ -3,13 +3,15 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import "../styles/LoginPage.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const API_URL = import.meta.env.VITE_API_URL
 
 function LoginPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const navigate = useNavigate();
 
@@ -29,16 +31,35 @@ function LoginPage(props) {
 
         storeToken(response.data.authToken);
         authenticateUser();
+        toast.success("Login SuccessFully !!", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
         navigate("/");
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
         setErrorMessage(errorDescription);
+        toast.warn(errorDescription, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       });
   };
 
   return (
     <div className="LoginPage">
+     <ToastContainer/>
       <h1 className="title-login">Login</h1>
       <br />
       <form onSubmit={handleLoginSubmit} className="form-login-page">
@@ -62,7 +83,7 @@ function LoginPage(props) {
 
         <button type="submit" className="btn-login">Login</button>
       </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+     
       <br />
       <br />
       <p className="p-login">Don't have an account yet?</p>
