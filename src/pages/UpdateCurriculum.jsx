@@ -76,15 +76,6 @@ function UpdateCurriculum() {
     }
   };
 
-  const onContentStateChange = (contentState) => {
-    console.log(contentState);
-  };
-
-  const handleChangeLink = (index, event) => {
-    const linksCopy = [...links];
-    linksCopy[index] = event.target.value;
-    setLinksValues(linksCopy);
-  };
 
   const handleChangeSkill = (index, event) => {
     const skillsCopy = [...skills];
@@ -504,7 +495,6 @@ console.log(htmlContentEducation.length)
               editorClassName="editorClassName"
               handlePastedText={() => false}
               onEditorStateChange={onEditorStateChange}
-              onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
                 summry.getCurrentContent().getPlainText("").length >=
@@ -649,7 +639,6 @@ console.log(htmlContentEducation.length)
               editorClassName="editorClassName"
               handlePastedText={() => false}
               onEditorStateChange={onProjectsEditorStateChange}
-              onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
                 projects.getCurrentContent().getPlainText("").length >=
@@ -684,7 +673,6 @@ console.log(htmlContentEducation.length)
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onExperienceEditorStateChange}
-              onContentStateChange={onContentStateChange}
               handlePastedText={() => false}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
@@ -721,7 +709,6 @@ console.log(htmlContentEducation.length)
               editorClassName="editorClassName"
               handlePastedText={() => false}
               onEditorStateChange={onEducationEditorStateChange}
-              onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
                 education.getCurrentContent().getPlainText("").length >=

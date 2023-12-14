@@ -71,9 +71,6 @@ function CurriculumPage() {
     }
   };
 
-  const onContentStateChange = (contentState) => {
-    console.log(contentState);
-  };
 
   const handleChangeSkill = (index, event) => {
     const skillsCopy = [...skills];
@@ -306,7 +303,7 @@ function CurriculumPage() {
             .then((response) => {
               console.log(response.data);
               toast.success('Successfully created CV!', {
-                position: "bottom-center",
+                position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -456,7 +453,6 @@ function CurriculumPage() {
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
               onEditorStateChange={onEditorStateChange}
-              onContentStateChange={onContentStateChange}
               handlePastedText={() => false}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
@@ -602,7 +598,6 @@ function CurriculumPage() {
               editorClassName="editorClassName"
               handlePastedText={() => false}
               onEditorStateChange={onProjectsEditorStateChange}
-              onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
                 projects.getCurrentContent().getPlainText("").length >=
@@ -637,7 +632,6 @@ function CurriculumPage() {
               editorClassName="editorClassName"
               handlePastedText={() => false}
               onEditorStateChange={onExperienceEditorStateChange}
-              onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
                 experience.getCurrentContent().getPlainText("").length >=
@@ -673,7 +667,6 @@ function CurriculumPage() {
               editorClassName="editorClassName"
               handlePastedText={() => false}
               onEditorStateChange={onEducationEditorStateChange}
-              onContentStateChange={onContentStateChange}
               style={{ border: "1px solid black", height: "20px" }}
               readOnly={
                 education.getCurrentContent().getPlainText("").length >=
