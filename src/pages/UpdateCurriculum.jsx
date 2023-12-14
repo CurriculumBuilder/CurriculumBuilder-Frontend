@@ -16,6 +16,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import validator from "validator";
 
 function UpdateCurriculum() {
   const { user } = useContext(AuthContext);
@@ -330,8 +331,20 @@ function UpdateCurriculum() {
         progress: undefined,
       });
     }
+    if(!validator.isEmail(email))
+    {
+      toast.warn('Please Enter Valid Email', {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
 console.log(htmlContentEducation.length)
-    if (storedToken && name.length > 0 && email.length > 0 && phone.length > 0 && address.length > 0 && position.length > 0 && skills.length > 0 && languages.length > 0 && htmlContentSummry.length > 8 && htmlContentEducation.length > 8) {
+    if (storedToken && name.length > 0 && validator.isEmail(email) && email.length > 0 && phone.length > 0 && address.length > 0 && position.length > 0 && skills.length > 0 && languages.length > 0 && htmlContentSummry.length > 8 && htmlContentEducation.length > 8) {
       axios
         .put(`${API_URL}/api/curriculums/${curriculumId}`, requestBody, {
           headers: { Authorization: `Bearer ${storedToken}` },
@@ -480,7 +493,7 @@ console.log(htmlContentEducation.length)
             Summary
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{ height: "250px" }}
           >
             <Editor
@@ -625,7 +638,7 @@ console.log(htmlContentEducation.length)
             Projects
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{ height: "250px" }}
           >
             <Editor
@@ -658,7 +671,7 @@ console.log(htmlContentEducation.length)
             Experience
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{
               height: "250px",
               marginBottom: "20px",
@@ -694,7 +707,7 @@ console.log(htmlContentEducation.length)
             Education
           </label>
           <div
-            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-400 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{
               height: "250px",
               marginBottom: "20px",

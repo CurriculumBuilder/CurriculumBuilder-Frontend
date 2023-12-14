@@ -13,7 +13,7 @@
 }
 
 .preview-menu{
-    @apply flex flex-row-reverse p-4 
+    @apply flex flex-row-reverse p-4
 }
 .preview-pdf{
     align-self: center;

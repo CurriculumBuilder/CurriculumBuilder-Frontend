@@ -11,6 +11,7 @@ import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import emailjs from "emailjs-com";
+import validator from "validator";
 
 
 function CurriculumPage() {
@@ -284,8 +285,20 @@ function CurriculumPage() {
       });
     }
 
+    if(!validator.isEmail(email))
+    {
+      toast.warn('Please Enter Valid Email', {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
       
-        if (storedToken && name.length > 0 && email.length > 0 && phone.length > 0 && address.length > 0 && position.length > 0 && skills.length > 0 && languages.length > 0 && htmlContentSummry.length >= 8 && htmlContentEducation.length >= 8) {
+        if (storedToken && name.length > 0 && validator.isEmail(email) && email.length > 0 && phone.length > 0 && address.length > 0 && position.length > 0 && skills.length > 0 && languages.length > 0 && htmlContentSummry.length >= 8 && htmlContentEducation.length >= 8) {
           axios
             .post(`${API_URL}/api/curriculums`, requestBody, {
               headers: { Authorization: `Bearer ${storedToken}` },
@@ -434,7 +447,7 @@ function CurriculumPage() {
           </label>
           <div
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
-            style={{ border: "1px solid black", height: "200px" }}
+            style={{ height: "250px" }}
           >
             <Editor
               editorState={summry}
@@ -579,7 +592,7 @@ function CurriculumPage() {
           </label>
           <div
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
-            style={{ border: "1px solid black", height: "200px" }}
+            style={{ height: "250px" }}
           >
             <Editor
               editorState={projects}
@@ -612,8 +625,7 @@ function CurriculumPage() {
           <div
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{
-              border: "1px solid black",
-              height: "200px",
+              height: "250px",
               marginBottom: "20px",
             }}
           >
@@ -649,8 +661,7 @@ function CurriculumPage() {
           <div
             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 overflow-y-auto"
             style={{
-              border: "1px solid black",
-              height: "200px",
+              height: "250px",
               marginBottom: "20px",
             }}
           >
@@ -715,7 +726,7 @@ function CurriculumPage() {
           <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" className="mr-2">
             <path fill="#ffffff" d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/>
           </svg>
-            Save & Download CV
+            Save & Download
           </button>
           <button
             onClick={handleTheme}
