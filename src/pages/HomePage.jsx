@@ -45,7 +45,7 @@ function HomePage() {
 
           <section id="about-us">
             <h1 className="titles-home">About Us</h1>
-            <div className="md:flex md:flex-row md:h-52 items-center ">
+            <div className="md:flex md:flex-row-reverse md:h-52 items-center ml-0 justify-evenly">
               <p className="p-about-section">
                 Our goal in Curriculum Builder is to serve as the main supporter
                 of individuals' personal career paths. We strive to
@@ -57,7 +57,7 @@ function HomePage() {
                 community by creating an application that enables job seekers to
                 discover their ideal job in a matter of minutes.
               </p>
-              <img src={logo} alt="logo" className="h-72 md:h-96 xl:pl-44" />
+              <img src={logo} alt="logo" className="h-72 md:h-96 " />
             </div>
           </section>
 
