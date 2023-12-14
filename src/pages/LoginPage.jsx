@@ -23,12 +23,9 @@ function LoginPage(props) {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password };
-    console.log("here is the error");
     axios
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
-        console.log("JWT token", response.data.authToken);
-
         storeToken(response.data.authToken);
         authenticateUser();
         toast.success("Login SuccessFully !!", {

@@ -343,14 +343,13 @@ function UpdateCurriculum() {
         progress: undefined,
       });
     }
-console.log(htmlContentEducation.length)
+
     if (storedToken && name.length > 0 && validator.isEmail(email) && email.length > 0 && phone.length > 0 && address.length > 0 && position.length > 0 && skills.length > 0 && languages.length > 0 && htmlContentSummry.length > 8 && htmlContentEducation.length > 8) {
       axios
         .put(`${API_URL}/api/curriculums/${curriculumId}`, requestBody, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then((response) => {
-          console.log(response.data);
           toast.success("Updated Successfully!", {
             position: "top-right",
             autoClose: 3000,
