@@ -5,20 +5,24 @@
 }
 
 .titles-home {
-    @apply font-bold text-slate-800 text-3xl p-5 md:text-4xl
+    @apply font-bold text-slate-800 text-3xl p-5 md:text-4xl md:w-3/4 xl:w-2/4
     
 }
 
 .main-section-home {
-    @apply  justify-center items-center md:columns-2 md:flex
+    @apply  justify-center items-center md:columns-2 md:flex 
 }
 
 .text-main-section {
-    @apply align-middle flex-wrap
+    @apply align-middle flex-wrap 
 }
 
 .p-main-section {
-    @apply p-5 align-text-bottom
+    @apply p-5 align-text-bottom md:w-3/4 xl:w-2/4
+}
+
+.p-about-section {
+    @apply p-5  md:w-3/5 align-middle xl:w-2/4 
 }
 
 .btnHome {

@@ -79,10 +79,10 @@ function AllCurriculumsPage() {
       
   return (
     <>
-      <h1 className='font-bold text-slate-800 text-4xl p-5'>My Curriculums</h1>
+      <h1 className='font-bold text-slate-800 text-4xl p-10 text-center'>My Curriculums</h1>
 
       <section className="bg-base-100 gap-4 m-2 md:grid md:grid-cols-2 md:gap-4 justify-center items-center">
-  {curriculums.map((curriculum) => (
+  {[...curriculums].reverse().map((curriculum) => (
     <div key={curriculum._id} className="flex items-center min-w-0 gap-x-4 shadow-lg m-2 w-full grid-cols-2 p-3 mr-2">
       <div className="min-w-0 flex-auto text-center">
         <Link to={`./update-curriculum/${curriculum._id}`}>
