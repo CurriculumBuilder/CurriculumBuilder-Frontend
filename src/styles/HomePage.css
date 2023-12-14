@@ -5,7 +5,7 @@
 }
 
 .titles-home {
-    @apply font-bold text-slate-800 text-3xl p-5 md:text-4xl md:w-3/4 xl:w-2/4
+    @apply font-bold text-slate-800 text-3xl p-5 md:text-4xl md:w-3/4 xl:w-3/4
     
 }
 
@@ -18,11 +18,11 @@
 }
 
 .p-main-section {
-    @apply p-5 align-text-bottom md:w-3/4 xl:w-2/4
+    @apply p-5 align-text-bottom md:w-3/4 xl:w-3/4
 }
 
 .p-about-section {
-    @apply p-5  md:w-3/5 align-middle xl:w-2/4 
+    @apply p-5  md:w-3/5  xl:w-3/4  md:pl-20
 }
 
 .btnHome {
