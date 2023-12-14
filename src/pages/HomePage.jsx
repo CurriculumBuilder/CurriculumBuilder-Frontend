@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import janeDoeCv from "../assets/janeDoeCv.png";
 
+
 function HomePage() {
   const { isLoggedIn } = useContext(AuthContext);
 
@@ -73,7 +74,7 @@ function HomePage() {
                 <div>
                   <label
                     for="email"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className="block mb-2 text-sm font-medium text-gray-300"
                   >
                     Your email
                   </label>
@@ -88,7 +89,7 @@ function HomePage() {
                 <div>
                   <label
                     for="subject"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className="block mb-2 text-sm font-medium text-gray-300"
                   >
                     Subject
                   </label>
@@ -103,14 +104,14 @@ function HomePage() {
                 <div className="sm:col-span-2">
                   <label
                     for="message"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+                    className="block mb-2 text-sm font-medium text-gray-300"
                   >
                     Your message
                   </label>
                   <textarea
                     id="message"
                     rows="6"
-                    className="block p-2.5 w-full text-sm rounded-lg shadow-sm border focus:ring-primary-500 focus:border-primary-500 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500"
+                    className="block p-2.5 w-full text-sm rounded-lg shadow-sm border focus:ring-primary-500 focus:border-primary-500 bg-gray-50  border-gray-600 placeholder-gray-400 text-white focus:ring-primary-500 focus:border-primary-500"
                     placeholder="Leave a comment..."
                   ></textarea>
                 </div>

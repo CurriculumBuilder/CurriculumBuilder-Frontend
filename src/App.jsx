@@ -11,12 +11,12 @@ import AllCurriculumsPage from "./pages/AllCurriculumsPage";
 import { DropdownProvider } from "./context/DropdownContext";
 import UpdateCurriculum from "./pages/UpdateCurriculum";
 
+
 function App() {
   return (
     <div className="App">
       <DropdownProvider>
-        <Navbar />
-
+        <Navbar /> 
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
