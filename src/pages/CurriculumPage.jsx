@@ -301,7 +301,7 @@ function CurriculumPage() {
               headers: { Authorization: `Bearer ${storedToken}` },
             })
             .then((response) => {
-              console.log(response.data);
+            
               toast.success('Successfully created CV!', {
                 position: "top-right",
                 autoClose: 3000,
@@ -316,7 +316,7 @@ function CurriculumPage() {
              
             })
             .catch((error) => {
-              console.log("Error creating CV from the API...");
+             
               console.log(error);
             });
         }
