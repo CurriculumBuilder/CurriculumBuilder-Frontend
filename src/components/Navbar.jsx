@@ -37,7 +37,7 @@ function Navbar() {
             <li className="list-none flex items-center gap-1 hover:text-neutral-400 transition-all h-16">
               <Link to={"/"}>
                 {" "}
-                <img src={logo} alt="logo" className="w-25 " />
+                <img src={logo} alt="logo" className="w-25 h-36" />
               </Link>
             </li>
           </div>
@@ -59,7 +59,7 @@ function Navbar() {
                 <Link to={"/signup"}>SignUp</Link>
               </li>
             )}
-          </div>
+          
           {isLoggedIn && (
             <div
               className="profile-dropdown-container"
@@ -67,7 +67,7 @@ function Navbar() {
               onMouseEnter={openDropdown}
               onMouseLeave={closeDropdown}
             >
-              <li className="profile-icon-container list-none ">
+              <li className="profile-icon-container list-none pt-4">
                 <img src={profile} className="profile-icon" alt="Profile" />
               </li>
 
@@ -86,7 +86,9 @@ function Navbar() {
               )}
             </div>
           )}
+          </div>
         </ul>
+        
       </nav>
     </div>
   );

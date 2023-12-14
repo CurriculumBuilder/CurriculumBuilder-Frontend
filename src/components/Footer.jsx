@@ -5,7 +5,7 @@ import logo from "../assets/curriculum-builder-logo.png"
 function Footer (){
     return (
     <footer className="footer ">
-        <Link to={"/"}> <img src={logo} alt="" className="w-25" /></Link>
+        <Link to={"/"}> <img src={logo} alt="" className="w-25 h-36" /></Link>
         <p>Copyright 2023 - Curriculum Builder</p>
         
     </footer>
