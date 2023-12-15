@@ -27,9 +27,9 @@
 [Project Demo](https://curriculum-builder.netlify.app/)
 
 ## Screenshots
-![Screen Shot](./src/assets/login.jpg)
-![Screen Shot](./src/assets/Home.jpg)
-![Screen Shot](./src/assets/CreateCV.jpg)
-![Screen Shot](./src/assets/MyCVs.jpg)
-![Screen Shot](./src/assets/UpdateCVs.jpg)
-![Screen Shot](./src/assets/Delete.jpg)
+![Screen Shot](./src/assets/login.JPG)
+![Screen Shot](./src/assets/Home.JPG)
+![Screen Shot](./src/assets/CreateCV.JPG)
+![Screen Shot](./src/assets/MyCVs.JPG)
+![Screen Shot](./src/assets/UpdateCVs.JPG)
+![Screen Shot](./src/assets/Delete.JPG)
