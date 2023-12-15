@@ -27,9 +27,16 @@
 [Project Demo](https://curriculum-builder.netlify.app/)
 
 ## Screenshots
+
+### Login Page
 ![Screen Shot](./src/assets/login.JPG)
+### Home Page
 ![Screen Shot](./src/assets/Home.JPG)
+### Create CV Page
 ![Screen Shot](./src/assets/CreateCV.JPG)
+### MyCurriculums Page
 ![Screen Shot](./src/assets/MyCVs.JPG)
-![Screen Shot](./src/assets/UpdateCVs.JPG)
+### UpdateCV Page
+![Screen Shot](./src/assets/UpdateCV.JPG)
+### Delete CV
 ![Screen Shot](./src/assets/Delete.JPG)
